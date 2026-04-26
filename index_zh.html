@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,462 +7,125 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg: #f7f6f3;
-  --surface: #ffffff;
-  --surface2: #f2f0ec;
-  --text: #18181b;
-  --text2: #52525b;
-  --text3: #a1a1aa;
-  --border: rgba(0,0,0,0.08);
-  --border2: rgba(0,0,0,0.16);
-  --accent: #1d4ed8;
-  --accent-bg: #eff6ff;
-  --green: #15803d;
-  --green-bg: #f0fdf4;
-  --green-border: #bbf7d0;
-  --amber: #92400e;
-  --amber-bg: #fffbeb;
-  --amber-border: #fde68a;
-  --purple: #6d28d9;
-  --purple-bg: #f5f3ff;
-  --purple-border: #ddd6fe;
-  --shadow: 0 4px 24px rgba(0,0,0,0.08);
-  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
-  --radius: 12px;
-  --radius-lg: 20px;
+  --bg: #f7f6f3; --surface: #ffffff; --surface2: #f2f0ec;
+  --text: #18181b; --text2: #52525b; --text3: #a1a1aa;
+  --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.16);
+  --accent: #1d4ed8; --accent-bg: #eff6ff;
+  --green: #15803d; --green-bg: #f0fdf4; --green-border: #bbf7d0;
+  --amber: #92400e; --amber-bg: #fffbeb; --amber-border: #fde68a;
+  --purple: #6d28d9; --purple-bg: #f5f3ff; --purple-border: #ddd6fe;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08); --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+  --radius: 12px; --radius-lg: 20px;
 }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ── HEADER ── */
-.header {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 0 2rem;
-  flex-shrink: 0;
-}
-.header-inner {
-  max-width: 860px;
-  margin: 0 auto;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-.header-logo {
-  font-family: 'DM Serif Display', serif;
-  font-size: 16px;
-  flex-shrink: 0;
-}
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+.header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; flex-shrink: 0; }
+.header-inner { max-width: 860px; margin: 0 auto; height: 56px; display: flex; align-items: center; gap: 1.5rem; }
+.header-logo { font-family: 'DM Serif Display', serif; font-size: 16px; flex-shrink: 0; }
 .header-logo span { color: var(--accent); }
 .progress-wrap { flex: 1; display: flex; align-items: center; gap: 10px; }
 .progress-bar { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
 .progress-inner { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
 .progress-label { font-size: 13px; color: var(--text3); white-space: nowrap; }
+.preload-banner { font-size: 12px; color: var(--text3); padding: 4px 14px; text-align: right; background: var(--surface); border-bottom: 1px solid var(--border); display: none; }
+.preload-banner.visible { display: block; }
 
-/* ── SCREEN SYSTEM ── */
 .screen { display: none; flex: 1; }
 .screen.active { display: flex; }
 
-/* ── INTRO SCREEN ── */
-#introScreen {
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-.intro-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 3rem;
-  max-width: 640px;
-  width: 100%;
-  box-shadow: var(--shadow);
-}
-.intro-tag {
-  display: inline-block;
-  background: var(--accent-bg);
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 20px;
-  margin-bottom: 16px;
-}
-.intro-card h1 {
-  font-family: 'DM Serif Display', serif;
-  font-size: 30px;
-  font-weight: 400;
-  margin-bottom: 14px;
-  line-height: 1.2;
-}
-.intro-card p {
-  font-size: 15px;
-  color: var(--text2);
-  line-height: 1.7;
-  margin-bottom: 1.75rem;
-}
+#introScreen { align-items: center; justify-content: center; padding: 2rem; }
+.intro-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 3rem; max-width: 640px; width: 100%; box-shadow: var(--shadow); }
+.intro-tag { display: inline-block; background: var(--accent-bg); color: var(--accent); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 16px; }
+.intro-card h1 { font-family: 'DM Serif Display', serif; font-size: 30px; font-weight: 400; margin-bottom: 14px; line-height: 1.2; }
+.intro-card p { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 1.75rem; }
 .criteria-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; }
-.crit-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 14px;
-  background: var(--bg);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-}
+.crit-row { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; background: var(--bg); border-radius: var(--radius); border: 1px solid var(--border); }
 .crit-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
 .crit-text strong { font-size: 13px; font-weight: 500; display: block; margin-bottom: 2px; }
 .crit-text span { font-size: 13px; color: var(--text2); }
-.start-btn {
-  width: 100%;
-  padding: 14px;
-  background: var(--text);
-  color: #fff;
-  border: none;
-  border-radius: 40px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
+.start-btn { width: 100%; padding: 14px; background: var(--text); color: #fff; border: none; border-radius: 40px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .start-btn:hover { background: #27272a; transform: translateY(-1px); box-shadow: var(--shadow); }
+.start-btn:disabled { background: var(--text3); cursor: wait; }
 
-/* ── QUESTION SCREEN ── */
-#questionScreen {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem 1.5rem 2rem;
-}
+#questionScreen { flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem 1.5rem 2rem; }
+.q-wrap { width: 100%; max-width: 860px; position: relative; }
+.q-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; transition: opacity 0.22s ease, transform 0.22s ease; }
 
-.q-wrap {
-  width: 100%;
-  max-width: 860px;
-  position: relative;
-}
-
-.q-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  transition: opacity 0.22s ease, transform 0.22s ease;
-}
-.q-card.fade-out { opacity: 0; transform: translateX(-32px); }
-.q-card.fade-in  { animation: fadeInRight 0.25s ease forwards; }
-@keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(32px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-.q-prompt-bar {
-  padding: 1.1rem 1.75rem;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.q-num-badge {
-  background: var(--surface2);
-  color: var(--text2);
-  font-size: 11px;
-  font-weight: 500;
-  padding: 4px 10px;
-  border-radius: 20px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.q-prompt-text {
-  font-size: 14px;
-  color: var(--text2);
-  line-height: 1.5;
-}
+.q-prompt-bar { padding: 1.1rem 1.75rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.q-num-badge { background: var(--surface2); color: var(--text2); font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+.q-prompt-text { font-size: 14px; color: var(--text2); line-height: 1.5; }
 .q-prompt-text strong { color: var(--text); font-weight: 500; }
 
-.q-images {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
+.q-images { display: grid; grid-template-columns: 1fr 1fr; }
 .q-img-col { position: relative; }
 .q-img-col:first-child { border-right: 1px solid var(--border); }
 .q-img-wrap { position: relative; background: var(--surface2); overflow: hidden; }
-.q-img-wrap img {
-  width: 100%;
-  aspect-ratio: 1/1;
-  object-fit: contain;
-  background: #000;
-  display: block;
-}
-.img-label {
-  position: absolute;
-  top: 10px; left: 10px;
-  background: rgba(0,0,0,0.52);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  padding: 3px 10px;
-  border-radius: 20px;
-  backdrop-filter: blur(4px);
-}
+.q-img-wrap img { width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #000; display: block; }
+.img-label { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.52); color: #fff; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; padding: 3px 10px; border-radius: 20px; backdrop-filter: blur(4px); }
 
-.q-voting {
-  padding: 1rem 1.75rem 1.25rem;
-  border-top: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.vote-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.vote-dim {
-  width: 148px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text2);
-}
+.q-voting { padding: 1rem 1.75rem 1.25rem; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+.vote-row { display: flex; align-items: center; gap: 10px; }
+.vote-dim { width: 148px; flex-shrink: 0; display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 500; color: var(--text2); }
 .dim-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .vote-choices { display: flex; gap: 6px; flex: 1; }
-.vchoice {
-  flex: 1;
-  padding: 7px 0;
-  border: 1.5px solid var(--border2);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--text2);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.14s;
-  display: flex; align-items: center; justify-content: center; gap: 5px;
-}
+.vchoice { flex: 1; padding: 7px 0; border: 1.5px solid var(--border2); border-radius: 8px; background: var(--surface); color: var(--text2); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.14s; display: flex; align-items: center; justify-content: center; gap: 5px; }
 .vchoice:hover { background: var(--surface2); }
 .vchoice .ck { display: none; font-size: 11px; }
-
-.vchoice.on-appeal  { background: var(--green-bg);  border-color: var(--green);  color: var(--green);  }
-.vchoice.on-align   { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+.vchoice.on-appeal { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+.vchoice.on-align { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
 .vchoice.on-overall { background: var(--purple-bg); border-color: var(--purple); color: var(--purple); }
-.vchoice.on-appeal .ck,
-.vchoice.on-align .ck,
-.vchoice.on-overall .ck { display: inline; }
+.vchoice.on-appeal .ck, .vchoice.on-align .ck, .vchoice.on-overall .ck { display: inline; }
 
-.vtie {
-  padding: 7px 12px;
-  border: 1.5px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--text3);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.14s;
-  white-space: nowrap;
-}
+.vtie { padding: 7px 12px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text3); font-family: 'DM Sans', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.14s; white-space: nowrap; }
 .vtie:hover { background: var(--surface2); color: var(--text2); }
-.vtie.on-appeal, .vtie.on-align, .vtie.on-overall {
-  background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber);
-}
+.vtie.on-appeal, .vtie.on-align, .vtie.on-overall { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
 
-.q-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 1.25rem;
-  padding: 0 0.25rem;
-}
-.nav-dots {
-  display: flex;
-  gap: 5px;
-  flex: 1;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 420px;
-  padding: 0 1rem;
-}
-.nav-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--border2);
-  cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
-}
+.q-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 1.25rem; padding: 0 0.25rem; }
+.nav-dots { display: flex; gap: 5px; flex: 1; justify-content: center; flex-wrap: wrap; max-width: 420px; padding: 0 1rem; }
+.nav-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border2); cursor: pointer; transition: background 0.2s, transform 0.15s; }
 .nav-dot:hover { transform: scale(1.4); }
 .nav-dot.done { background: var(--accent); }
 .nav-dot.current { background: var(--text); transform: scale(1.3); }
 
-.nav-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 9px 20px;
-  border-radius: 40px;
-  border: 1.5px solid var(--border2);
-  background: var(--surface);
-  color: var(--text2);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
+.nav-btn { display: flex; align-items: center; gap: 6px; padding: 9px 20px; border-radius: 40px; border: 1.5px solid var(--border2); background: var(--surface); color: var(--text2); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
 .nav-btn:hover:not(:disabled) { background: var(--surface2); color: var(--text); }
 .nav-btn:disabled { opacity: 0.3; cursor: default; }
-.nav-btn.primary {
-  background: var(--text);
-  border-color: var(--text);
-  color: #fff;
-}
+.nav-btn.primary { background: var(--text); border-color: var(--text); color: #fff; }
 .nav-btn.primary:hover:not(:disabled) { background: #27272a; }
 .nav-btn.primary:disabled { background: var(--text3); border-color: var(--text3); opacity: 1; }
 
-/* ── RESULT SCREEN ── */
-#resultScreen {
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 3rem 2rem;
-}
+#resultScreen { flex-direction: column; align-items: center; justify-content: flex-start; padding: 3rem 2rem; }
 .result-inner { max-width: 700px; width: 100%; }
 .result-header { text-align: center; margin-bottom: 2.5rem; }
-.result-icon {
-  width: 60px; height: 60px;
-  background: var(--green-bg);
-  border: 1px solid var(--green-border);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 1.25rem;
-}
-.result-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 26px; font-weight: 400;
-  margin-bottom: 6px;
-}
+.result-icon { width: 60px; height: 60px; background: var(--green-bg); border: 1px solid var(--green-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+.result-title { font-family: 'DM Serif Display', serif; font-size: 26px; font-weight: 400; margin-bottom: 6px; }
 .result-sub { font-size: 14px; color: var(--text2); }
-
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 1.5rem;
-}
-.stat-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem 1rem;
-  text-align: center;
-}
-.stat-dim-label {
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--text3);
-  margin-bottom: 10px;
-}
-.stat-bars {
-  display: flex; gap: 6px; justify-content: center;
-  align-items: flex-end; height: 44px; margin-bottom: 8px;
-}
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.5rem; }
+.stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1rem; text-align: center; }
+.stat-dim-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 10px; }
+.stat-bars { display: flex; gap: 6px; justify-content: center; align-items: flex-end; height: 44px; margin-bottom: 8px; }
 .sbar { width: 26px; border-radius: 3px 3px 0 0; min-height: 4px; }
-.sbar.a { background: #bbf7d0; }
-.sbar.b { background: #bfdbfe; }
-.sbar.t { background: #fde68a; width: 18px; }
+.sbar.a { background: #bbf7d0; } .sbar.b { background: #bfdbfe; } .sbar.t { background: #fde68a; width: 18px; }
 .stat-nums { display: flex; gap: 6px; justify-content: center; font-size: 12px; font-weight: 500; }
-.sn-a { color: var(--green); }
-.sn-b { color: var(--accent); }
-.sn-t { color: var(--amber); }
-
-.result-table {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-}
-.rt-head {
-  display: grid;
-  grid-template-columns: 36px 1fr 86px 86px 86px;
-  gap: 6px;
-  padding: 9px 14px;
-  background: var(--surface2);
-  border-bottom: 1px solid var(--border);
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--text3);
-}
+.sn-a { color: var(--green); } .sn-b { color: var(--accent); } .sn-t { color: var(--amber); }
+.result-table { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
+.rt-head { display: grid; grid-template-columns: 36px 1fr 86px 86px 86px; gap: 6px; padding: 9px 14px; background: var(--surface2); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); }
 .rt-scroll { max-height: 340px; overflow-y: auto; }
-.rt-row {
-  display: grid;
-  grid-template-columns: 36px 1fr 86px 86px 86px;
-  gap: 6px;
-  padding: 9px 14px;
-  border-bottom: 1px solid var(--border);
-  align-items: center;
-  font-size: 12px;
-  cursor: pointer;
-  transition: background 0.1s;
-}
+.rt-row { display: grid; grid-template-columns: 36px 1fr 86px 86px 86px; gap: 6px; padding: 9px 14px; border-bottom: 1px solid var(--border); align-items: center; font-size: 12px; cursor: pointer; transition: background 0.1s; }
 .rt-row:last-child { border-bottom: none; }
 .rt-row:hover { background: var(--bg); }
 .rt-n { color: var(--text3); font-size: 11px; }
 .rt-p { color: var(--text); line-height: 1.4; }
-.chip {
-  display: inline-block; padding: 3px 7px;
-  border-radius: 6px; font-size: 11px; font-weight: 500;
-  text-align: center;
-}
+.chip { display: inline-block; padding: 3px 7px; border-radius: 6px; font-size: 11px; font-weight: 500; text-align: center; }
 .ca { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
 .cb { background: var(--accent-bg); color: var(--accent); border: 1px solid #bfdbfe; }
 .ct { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
 .cn { background: var(--surface2); color: var(--text3); border: 1px solid var(--border); }
-
 .result-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-.btn-o {
-  padding: 11px 26px; border-radius: 40px;
-  border: 1.5px solid var(--border2); background: var(--surface);
-  color: var(--text); font-family: 'DM Sans', sans-serif;
-  font-size: 14px; cursor: pointer; transition: background 0.15s;
-}
+.btn-o { padding: 11px 26px; border-radius: 40px; border: 1.5px solid var(--border2); background: var(--surface); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; transition: background 0.15s; }
 .btn-o:hover { background: var(--surface2); }
-.btn-f {
-  padding: 11px 26px; border-radius: 40px;
-  border: none; background: var(--text); color: #fff;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px; cursor: pointer; transition: background 0.15s;
-}
+.btn-f { padding: 11px 26px; border-radius: 40px; border: none; background: var(--text); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; transition: background 0.15s; }
 .btn-f:hover { background: #27272a; }
-
 @media (max-width: 580px) {
   .q-voting { padding: 0.875rem 1rem; }
   .vote-dim { width: 104px; font-size: 11px; }
@@ -483,132 +146,75 @@ body {
     </div>
   </div>
 </header>
+<div class="preload-banner" id="preloadBanner">正在预加载图片，仅首次需要等待。</div>
 
-<!-- ── INTRO ── -->
 <div class="screen active" id="introScreen">
   <div class="intro-card">
     <div class="intro-tag">用户研究 · 文本生成图像</div>
     <h1>图像偏好评测</h1>
-    <p>
-      本问卷将依次展示 <strong>50 组图片</strong>，每组的两张图由两个不同的模型根据 <strong>同一段文字描述</strong> 生成。请针对每一组从下面三个独立维度做出选择。
-    </p>
+    <p>本问卷将依次展示 <strong>50 组图片</strong>，每组的两张图由两个不同的模型根据 <strong>同一段文字描述</strong> 生成。请针对每一组从下面三个独立维度做出选择。</p>
     <div class="criteria-list">
-      <div class="crit-row">
-        <div class="crit-dot" style="background:#15803d;"></div>
-        <div class="crit-text">
-          <strong>视觉吸引力</strong>
-          <span>哪张图在视觉上更美观、更耐看（不考虑是否符合描述）？</span>
-        </div>
-      </div>
-      <div class="crit-row">
-        <div class="crit-dot" style="background:#1d4ed8;"></div>
-        <div class="crit-text">
-          <strong>描述匹配度</strong>
-          <span>哪张图更准确地呈现了文字描述里的内容？</span>
-        </div>
-      </div>
-      <div class="crit-row">
-        <div class="crit-dot" style="background:#6d28d9;"></div>
-        <div class="crit-text">
-          <strong>综合偏好</strong>
-          <span>综合所有方面，你整体上更喜欢哪张？</span>
-        </div>
-      </div>
+      <div class="crit-row"><div class="crit-dot" style="background:#15803d;"></div>
+        <div class="crit-text"><strong>视觉吸引力</strong><span>哪张图在视觉上更美观、更耐看（不考虑是否符合描述）？</span></div></div>
+      <div class="crit-row"><div class="crit-dot" style="background:#1d4ed8;"></div>
+        <div class="crit-text"><strong>描述匹配度</strong><span>哪张图更准确地呈现了文字描述里的内容？</span></div></div>
+      <div class="crit-row"><div class="crit-dot" style="background:#6d28d9;"></div>
+        <div class="crit-text"><strong>综合偏好</strong><span>综合所有方面，你整体上更喜欢哪张？</span></div></div>
     </div>
-    <button class="start-btn" onclick="startSurvey()">
-      开始评测
+    <button class="start-btn" id="startBtn" onclick="startSurvey()">
+      <span id="startBtnLabel">开始评测</span>
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
 </div>
 
-<!-- ── QUESTION ── -->
 <div class="screen" id="questionScreen">
   <div class="q-wrap">
-
     <div class="q-card" id="qCard">
       <div class="q-prompt-bar">
         <div class="q-num-badge" id="qNumBadge">第 1 题 / 50</div>
         <div class="q-prompt-text" id="qPromptText"></div>
       </div>
       <div class="q-images">
-        <div class="q-img-col">
-          <div class="q-img-wrap">
-            <img id="imgA" src="" alt="图片 A" />
-            <div class="img-label">图片 A</div>
-          </div>
-        </div>
-        <div class="q-img-col">
-          <div class="q-img-wrap">
-            <img id="imgB" src="" alt="图片 B" />
-            <div class="img-label">图片 B</div>
-          </div>
-        </div>
+        <div class="q-img-col"><div class="q-img-wrap"><img id="imgA" src="" alt="图片 A" /><div class="img-label">图片 A</div></div></div>
+        <div class="q-img-col"><div class="q-img-wrap"><img id="imgB" src="" alt="图片 B" /><div class="img-label">图片 B</div></div></div>
       </div>
       <div class="q-voting">
-        <div class="vote-row">
-          <div class="vote-dim"><div class="dim-dot" style="background:#15803d;"></div>视觉吸引力</div>
-          <div class="vote-choices">
-            <button class="vchoice" id="v-appeal-a" onclick="vote('appeal','a')"><span class="ck">✓</span> 图片 A</button>
-            <button class="vchoice" id="v-appeal-b" onclick="vote('appeal','b')"><span class="ck">✓</span> 图片 B</button>
-          </div>
-          <button class="vtie" id="v-appeal-tie" onclick="vote('appeal','tie')">差不多</button>
-        </div>
-        <div class="vote-row">
-          <div class="vote-dim"><div class="dim-dot" style="background:#1d4ed8;"></div>描述匹配度</div>
-          <div class="vote-choices">
-            <button class="vchoice" id="v-align-a" onclick="vote('align','a')"><span class="ck">✓</span> 图片 A</button>
-            <button class="vchoice" id="v-align-b" onclick="vote('align','b')"><span class="ck">✓</span> 图片 B</button>
-          </div>
-          <button class="vtie" id="v-align-tie" onclick="vote('align','tie')">差不多</button>
-        </div>
-        <div class="vote-row">
-          <div class="vote-dim"><div class="dim-dot" style="background:#6d28d9;"></div>综合偏好</div>
-          <div class="vote-choices">
-            <button class="vchoice" id="v-overall-a" onclick="vote('overall','a')"><span class="ck">✓</span> 图片 A</button>
-            <button class="vchoice" id="v-overall-b" onclick="vote('overall','b')"><span class="ck">✓</span> 图片 B</button>
-          </div>
-          <button class="vtie" id="v-overall-tie" onclick="vote('overall','tie')">差不多</button>
-        </div>
+        <div class="vote-row"><div class="vote-dim"><div class="dim-dot" style="background:#15803d;"></div>视觉吸引力</div>
+          <div class="vote-choices"><button class="vchoice" id="v-appeal-a" onclick="vote('appeal','a')"><span class="ck">✓</span> 图片 A</button><button class="vchoice" id="v-appeal-b" onclick="vote('appeal','b')"><span class="ck">✓</span> 图片 B</button></div>
+          <button class="vtie" id="v-appeal-tie" onclick="vote('appeal','tie')">差不多</button></div>
+        <div class="vote-row"><div class="vote-dim"><div class="dim-dot" style="background:#1d4ed8;"></div>描述匹配度</div>
+          <div class="vote-choices"><button class="vchoice" id="v-align-a" onclick="vote('align','a')"><span class="ck">✓</span> 图片 A</button><button class="vchoice" id="v-align-b" onclick="vote('align','b')"><span class="ck">✓</span> 图片 B</button></div>
+          <button class="vtie" id="v-align-tie" onclick="vote('align','tie')">差不多</button></div>
+        <div class="vote-row"><div class="vote-dim"><div class="dim-dot" style="background:#6d28d9;"></div>综合偏好</div>
+          <div class="vote-choices"><button class="vchoice" id="v-overall-a" onclick="vote('overall','a')"><span class="ck">✓</span> 图片 A</button><button class="vchoice" id="v-overall-b" onclick="vote('overall','b')"><span class="ck">✓</span> 图片 B</button></div>
+          <button class="vtie" id="v-overall-tie" onclick="vote('overall','tie')">差不多</button></div>
       </div>
     </div>
-
     <div class="q-nav">
       <button class="nav-btn" id="prevBtn" onclick="goTo(cur-1)" disabled>
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 12L3 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        上一题
-      </button>
+        上一题</button>
       <div class="nav-dots" id="navDots"></div>
-      <button class="nav-btn primary" id="nextBtn" onclick="handleNext()">
-        下一题
+      <button class="nav-btn primary" id="nextBtn" onclick="handleNext()">下一题
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </div>
-
   </div>
 </div>
 
-<!-- ── RESULT ── -->
 <div class="screen" id="resultScreen">
   <div class="result-inner">
     <div class="result-header">
-      <div class="result-icon">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-      </div>
+      <div class="result-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
       <h2 class="result-title">评测完成</h2>
       <p class="result-sub">感谢参与！下方是你的回答汇总。</p>
     </div>
-
     <div class="stats-row" id="statsRow"></div>
-
     <div class="result-table">
-      <div class="rt-head">
-        <div>#</div><div>描述</div>
-        <div>吸引力</div><div>匹配度</div><div>综合</div>
-      </div>
+      <div class="rt-head"><div>#</div><div>描述</div><div>吸引力</div><div>匹配度</div><div>综合</div></div>
       <div class="rt-scroll" id="rtBody"></div>
     </div>
-
     <div class="result-actions">
       <button class="btn-o" onclick="backToSurvey()">← 回看答案</button>
       <button class="btn-f" onclick="exportCSV()">导出 CSV</button>
@@ -618,72 +224,46 @@ body {
 </div>
 
 <script>
-// Switch the asset host without re-uploading. After pushing this folder to GitHub,
-// set BASE_URL to: 'https://cdn.jsdelivr.net/gh/<GH_USER>/<GH_REPO>@main/'
-// Leave as '' to test locally (index.html next to human_eval_pairs/).
 const BASE_URL = 'https://cdn.jsdelivr.net/gh/sophialanlan/map-pgmap-humaneva@main/';
+const STR = {"preloading": "正在加载图片…", "start_btn": "开始评测", "q_badge": "第 {i} 题 / {n}", "q_short": "第", "prompt_label": "描述", "dim_appeal": "视觉吸引力", "dim_align": "描述匹配度", "dim_overall": "综合偏好", "choice_a": "图片 A", "choice_b": "图片 B", "choice_tie": "差不多", "nav_next": "下一题", "nav_submit": "提交", "copied": "已复制！"};
+const questions = [{"prompt": "现金", "imgA": "human_eval_pairs/q01_A.webp", "imgB": "human_eval_pairs/q01_B.webp"}, {"prompt": "一艘大型白色游艇", "imgA": "human_eval_pairs/q02_A.webp", "imgB": "human_eval_pairs/q02_B.webp"}, {"prompt": "满月上的一头大象的剪影", "imgA": "human_eval_pairs/q03_A.webp", "imgB": "human_eval_pairs/q03_B.webp"}, {"prompt": "一朵带有大片黄色花瓣的花", "imgA": "human_eval_pairs/q04_A.webp", "imgB": "human_eval_pairs/q04_B.webp"}, {"prompt": "一只穿蓝色慢跑服的白兔痛得弯下腰，而一只穿红色背心的乌龟自信地冲过终点线", "imgA": "human_eval_pairs/q05_A.webp", "imgB": "human_eval_pairs/q05_B.webp"}, {"prompt": "我的世界(Minecraft)风格的蒙娜丽莎", "imgA": "human_eval_pairs/q06_A.webp", "imgB": "human_eval_pairs/q06_B.webp"}, {"prompt": "一只鸟和它在喷泉中的倒影", "imgA": "human_eval_pairs/q07_A.webp", "imgB": "human_eval_pairs/q07_B.webp"}, {"prompt": "从上方俯瞰的一座钟楼", "imgA": "human_eval_pairs/q08_A.webp", "imgB": "human_eval_pairs/q08_B.webp"}, {"prompt": "几片睡莲叶，上面没有青蛙", "imgA": "human_eval_pairs/q09_A.webp", "imgB": "human_eval_pairs/q09_B.webp"}, {"prompt": "下龙湾", "imgA": "human_eval_pairs/q10_A.webp", "imgB": "human_eval_pairs/q10_B.webp"}, {"prompt": "一个带着笑脸的三角形", "imgA": "human_eval_pairs/q11_A.webp", "imgB": "human_eval_pairs/q11_B.webp"}, {"prompt": "一幅山上房屋的抽象画", "imgA": "human_eval_pairs/q12_A.webp", "imgB": "human_eval_pairs/q12_B.webp"}, {"prompt": "一位板球手站在三柱门(wicket)旁边", "imgA": "human_eval_pairs/q13_A.webp", "imgB": "human_eval_pairs/q13_B.webp"}, {"prompt": "一只火鸡在厨房里走动", "imgA": "human_eval_pairs/q14_A.webp", "imgB": "human_eval_pairs/q14_B.webp"}, {"prompt": "一只猫坐在一个画有大象图案的盒子上", "imgA": "human_eval_pairs/q15_A.webp", "imgB": "human_eval_pairs/q15_B.webp"}, {"prompt": "一件印着 \"Carpe Diem\" 字样的 T 恤", "imgA": "human_eval_pairs/q16_A.webp", "imgB": "human_eval_pairs/q16_B.webp"}, {"prompt": "一座太空电梯", "imgA": "human_eval_pairs/q17_A.webp", "imgB": "human_eval_pairs/q17_B.webp"}, {"prompt": "一幅男孩与老虎玩耍的卡通画", "imgA": "human_eval_pairs/q18_A.webp", "imgB": "human_eval_pairs/q18_B.webp"}, {"prompt": "一双黑色高帮运动鞋", "imgA": "human_eval_pairs/q19_A.webp", "imgB": "human_eval_pairs/q19_B.webp"}, {"prompt": "一条有几辆汽车的街道", "imgA": "human_eval_pairs/q20_A.webp", "imgB": "human_eval_pairs/q20_B.webp"}, {"prompt": "木星之眼", "imgA": "human_eval_pairs/q21_A.webp", "imgB": "human_eval_pairs/q21_B.webp"}, {"prompt": "一头驴和一只章鱼在拔河。驴用嘴叼着绳子。一只猫正从绳子上跳过。", "imgA": "human_eval_pairs/q22_A.webp", "imgB": "human_eval_pairs/q22_B.webp"}, {"prompt": "一位法官在向被告宣读判决", "imgA": "human_eval_pairs/q23_A.webp", "imgB": "human_eval_pairs/q23_B.webp"}, {"prompt": "一只长着黑耳朵和黑色斑纹的白猫", "imgA": "human_eval_pairs/q24_A.webp", "imgB": "human_eval_pairs/q24_B.webp"}, {"prompt": "一双印着可爱猫咪的成对袜子", "imgA": "human_eval_pairs/q25_A.webp", "imgB": "human_eval_pairs/q25_B.webp"}, {"prompt": "一座雕像", "imgA": "human_eval_pairs/q26_A.webp", "imgB": "human_eval_pairs/q26_B.webp"}, {"prompt": "一个女孩骑着一只鸵鸟", "imgA": "human_eval_pairs/q27_A.webp", "imgB": "human_eval_pairs/q27_B.webp"}, {"prompt": "一本儿童读物封面，画着一只白狗在驾驶一辆红色皮卡", "imgA": "human_eval_pairs/q28_A.webp", "imgB": "human_eval_pairs/q28_B.webp"}, {"prompt": "一位祖母在给她的孙子和孙女读书", "imgA": "human_eval_pairs/q29_A.webp", "imgB": "human_eval_pairs/q29_B.webp"}, {"prompt": "一把锤子", "imgA": "human_eval_pairs/q30_A.webp", "imgB": "human_eval_pairs/q30_B.webp"}, {"prompt": "一张由水构成的蜻蜓的照片", "imgA": "human_eval_pairs/q31_A.webp", "imgB": "human_eval_pairs/q31_B.webp"}, {"prompt": "一个由豪猪构成的立方体", "imgA": "human_eval_pairs/q32_A.webp", "imgB": "human_eval_pairs/q32_B.webp"}, {"prompt": "一杯橙汁，放在一盘涂了黄油的吐司的右边", "imgA": "human_eval_pairs/q33_A.webp", "imgB": "human_eval_pairs/q33_B.webp"}, {"prompt": "几匹马在月球表面拉着马车，背景是自由女神像和大金字塔，天空中可以看到地球", "imgA": "human_eval_pairs/q34_A.webp", "imgB": "human_eval_pairs/q34_B.webp"}, {"prompt": "一个皮肤晒成棕色、穿着蓝色牛仔裤和黄色衬衫的女人", "imgA": "human_eval_pairs/q35_A.webp", "imgB": "human_eval_pairs/q35_B.webp"}, {"prompt": "一只长着蓝色条纹的斑马", "imgA": "human_eval_pairs/q36_A.webp", "imgB": "human_eval_pairs/q36_B.webp"}, {"prompt": "灵感", "imgA": "human_eval_pairs/q37_A.webp", "imgB": "human_eval_pairs/q37_B.webp"}, {"prompt": "一头驼鹿在山间小溪旁", "imgA": "human_eval_pairs/q38_A.webp", "imgB": "human_eval_pairs/q38_B.webp"}, {"prompt": "一只戴着摩托车头盔、披着披风的泰迪熊站在阿威湖(Loch Awe)前，身后是基尔丘恩城堡(Kilchurn Castle)", "imgA": "human_eval_pairs/q39_A.webp", "imgB": "human_eval_pairs/q39_B.webp"}, {"prompt": "一架竹梯", "imgA": "human_eval_pairs/q40_A.webp", "imgB": "human_eval_pairs/q40_B.webp"}, {"prompt": "四个人坐在一辆敞篷车里", "imgA": "human_eval_pairs/q41_A.webp", "imgB": "human_eval_pairs/q41_B.webp"}, {"prompt": "一个闪亮的机器人穿着赛车服、戴着黑色面罩，自豪地站在一辆 F1 赛车前。背景是夕阳下的城市天际线。漫画风格插画。", "imgA": "human_eval_pairs/q42_A.webp", "imgB": "human_eval_pairs/q42_B.webp"}, {"prompt": "一位政客在向大批人群演讲", "imgA": "human_eval_pairs/q43_A.webp", "imgB": "human_eval_pairs/q43_B.webp"}, {"prompt": "一个红色球体在一个黄色盒子上面", "imgA": "human_eval_pairs/q44_A.webp", "imgB": "human_eval_pairs/q44_B.webp"}, {"prompt": "一幅老忠实间歇泉(Old Faithful)的印象派绘画", "imgA": "human_eval_pairs/q45_A.webp", "imgB": "human_eval_pairs/q45_B.webp"}, {"prompt": "两个人面对面", "imgA": "human_eval_pairs/q46_A.webp", "imgB": "human_eval_pairs/q46_B.webp"}, {"prompt": "一台笔记本电脑屏幕上显示着一堆照片", "imgA": "human_eval_pairs/q47_A.webp", "imgB": "human_eval_pairs/q47_B.webp"}, {"prompt": "两把直立的小提琴，琴弓放在它们前面的地面上", "imgA": "human_eval_pairs/q48_A.webp", "imgB": "human_eval_pairs/q48_B.webp"}, {"prompt": "一扇画着熊猫吃竹子的彩绘玻璃窗", "imgA": "human_eval_pairs/q49_A.webp", "imgB": "human_eval_pairs/q49_B.webp"}, {"prompt": "啤酒", "imgA": "human_eval_pairs/q50_A.webp", "imgB": "human_eval_pairs/q50_B.webp"}];
 
-const questions = [
-  { prompt: "一只柴犬", imgA: "human_eval_pairs/q01_A.jpg", imgB: "human_eval_pairs/q01_B.jpg" },
-  { prompt: "一把螺丝刀的素描", imgA: "human_eval_pairs/q02_A.jpg", imgB: "human_eval_pairs/q02_B.jpg" },
-  { prompt: "一个里面有蜡烛的南瓜", imgA: "human_eval_pairs/q03_A.jpg", imgB: "human_eval_pairs/q03_B.jpg" },
-  { prompt: "一栋木屋", imgA: "human_eval_pairs/q04_A.jpg", imgB: "human_eval_pairs/q04_B.jpg" },
-  { prompt: "一个男人在读一本封面上有棱镜的书", imgA: "human_eval_pairs/q05_A.jpg", imgB: "human_eval_pairs/q05_B.jpg" },
-  { prompt: "桌子上的一颗牛油果", imgA: "human_eval_pairs/q06_A.jpg", imgB: "human_eval_pairs/q06_B.jpg" },
-  { prompt: "一个皮肤晒成棕色、穿着蓝色牛仔裤和黄色衬衫的女人", imgA: "human_eval_pairs/q07_A.jpg", imgB: "human_eval_pairs/q07_B.jpg" },
-  { prompt: "一幅瀑布的抽象画", imgA: "human_eval_pairs/q08_A.jpg", imgB: "human_eval_pairs/q08_B.jpg" },
-  { prompt: "一个男人在追一匹马", imgA: "human_eval_pairs/q09_A.jpg", imgB: "human_eval_pairs/q09_B.jpg" },
-  { prompt: "一只梦想变成老虎的猫", imgA: "human_eval_pairs/q10_A.jpg", imgB: "human_eval_pairs/q10_B.jpg" },
-  { prompt: "一只戴眼镜系领结的书呆子小熊", imgA: "human_eval_pairs/q11_A.jpg", imgB: "human_eval_pairs/q11_B.jpg" },
-  { prompt: "一只戴着摩托车头盔、披着披风的泰迪熊站在阿威湖(Loch Awe)前，身后是基尔丘恩城堡(Kilchurn Castle)", imgA: "human_eval_pairs/q12_A.jpg", imgB: "human_eval_pairs/q12_B.jpg" },
-  { prompt: "一只被老忠实间歇泉冲到空中的充气兔子", imgA: "human_eval_pairs/q13_A.jpg", imgB: "human_eval_pairs/q13_B.jpg" },
-  { prompt: "一条带亮黄色分道线的双车道公路", imgA: "human_eval_pairs/q14_A.jpg", imgB: "human_eval_pairs/q14_B.jpg" },
-  { prompt: "一支球队在海滩上打棒球", imgA: "human_eval_pairs/q15_A.jpg", imgB: "human_eval_pairs/q15_B.jpg" },
-  { prompt: "一个篮筐里卡着一个大蓝球", imgA: "human_eval_pairs/q16_A.jpg", imgB: "human_eval_pairs/q16_B.jpg" },
-  { prompt: "一个白胡子老人的自拍", imgA: "human_eval_pairs/q17_A.jpg", imgB: "human_eval_pairs/q17_B.jpg" },
-  { prompt: "金属", imgA: "human_eval_pairs/q18_A.jpg", imgB: "human_eval_pairs/q18_B.jpg" },
-  { prompt: "一幅仓鼠龙的油画", imgA: "human_eval_pairs/q19_A.jpg", imgB: "human_eval_pairs/q19_B.jpg" },
-  { prompt: "一个男人站在树下的素描", imgA: "human_eval_pairs/q20_A.jpg", imgB: "human_eval_pairs/q20_B.jpg" },
-  { prompt: "一张用寿司拼成的美国地图，放在桌上，旁边有一杯红酒", imgA: "human_eval_pairs/q21_A.jpg", imgB: "human_eval_pairs/q21_B.jpg" },
-  { prompt: "一栋摩天大楼的速写", imgA: "human_eval_pairs/q22_A.jpg", imgB: "human_eval_pairs/q22_B.jpg" },
-  { prompt: "一只西伯利亚哈士奇在弹钢琴", imgA: "human_eval_pairs/q23_A.jpg", imgB: "human_eval_pairs/q23_B.jpg" },
-  { prompt: "夜晚的时代广场", imgA: "human_eval_pairs/q24_A.jpg", imgB: "human_eval_pairs/q24_B.jpg" },
-  { prompt: "一颗柯基的头被描绘成星云爆炸", imgA: "human_eval_pairs/q25_A.jpg", imgB: "human_eval_pairs/q25_B.jpg" },
-  { prompt: "一座太空电梯", imgA: "human_eval_pairs/q26_A.jpg", imgB: "human_eval_pairs/q26_B.jpg" },
-  { prompt: "一个消防栓", imgA: "human_eval_pairs/q27_A.jpg", imgB: "human_eval_pairs/q27_B.jpg" },
-  { prompt: "自由女神像旁边的华盛顿纪念碑", imgA: "human_eval_pairs/q28_A.jpg", imgB: "human_eval_pairs/q28_B.jpg" },
-  { prompt: "一只戴着红色领结和紫色派对帽的柯基", imgA: "human_eval_pairs/q29_A.jpg", imgB: "human_eval_pairs/q29_B.jpg" },
-  { prompt: "三头大象叠罗汉站在一起", imgA: "human_eval_pairs/q30_A.jpg", imgB: "human_eval_pairs/q30_B.jpg" },
-  { prompt: "山中一段长城的精细炭笔素描", imgA: "human_eval_pairs/q31_A.jpg", imgB: "human_eval_pairs/q31_B.jpg" },
-  { prompt: "阴天的大峡谷", imgA: "human_eval_pairs/q32_A.jpg", imgB: "human_eval_pairs/q32_B.jpg" },
-  { prompt: "一架直升机悬停在时代广场上空", imgA: "human_eval_pairs/q33_A.jpg", imgB: "human_eval_pairs/q33_B.jpg" },
-  { prompt: "三只黑猫站在两只橘猫旁边", imgA: "human_eval_pairs/q34_A.jpg", imgB: "human_eval_pairs/q34_B.jpg" },
-  { prompt: "一匹马在嚼一朵大蓝花", imgA: "human_eval_pairs/q35_A.jpg", imgB: "human_eval_pairs/q35_B.jpg" },
-  { prompt: "我的世界(Minecraft)风格的自由女神像", imgA: "human_eval_pairs/q36_A.jpg", imgB: "human_eval_pairs/q36_B.jpg" },
-  { prompt: "一条飞在天上的锦鲤", imgA: "human_eval_pairs/q37_A.jpg", imgB: "human_eval_pairs/q37_B.jpg" },
-  { prompt: "木星之眼", imgA: "human_eval_pairs/q38_A.jpg", imgB: "human_eval_pairs/q38_B.jpg" },
-  { prompt: "一栋小房子", imgA: "human_eval_pairs/q39_A.jpg", imgB: "human_eval_pairs/q39_B.jpg" },
-  { prompt: "涂色书风格的一页：一匹马站在小溪旁", imgA: "human_eval_pairs/q40_A.jpg", imgB: "human_eval_pairs/q40_B.jpg" },
-  { prompt: "一部关于男孩与老虎的漫画", imgA: "human_eval_pairs/q41_A.jpg", imgB: "human_eval_pairs/q41_B.jpg" },
-  { prompt: "知识之门，一扇在黑暗中明亮开启的门户。抽象动漫风景油画", imgA: "human_eval_pairs/q42_A.jpg", imgB: "human_eval_pairs/q42_B.jpg" },
-  { prompt: "一头鲸鱼在悉尼歌剧院前跃出水面", imgA: "human_eval_pairs/q43_A.jpg", imgB: "human_eval_pairs/q43_B.jpg" },
-  { prompt: "一张桌上用寿司拼成的美国地图", imgA: "human_eval_pairs/q44_A.jpg", imgB: "human_eval_pairs/q44_B.jpg" },
-  { prompt: "一只小老鼠坐在一只电脑鼠标旁边", imgA: "human_eval_pairs/q45_A.jpg", imgB: "human_eval_pairs/q45_B.jpg" },
-  { prompt: "国际空间站", imgA: "human_eval_pairs/q46_A.jpg", imgB: "human_eval_pairs/q46_B.jpg" },
-  { prompt: "写在街道路面上的单词 'START'", imgA: "human_eval_pairs/q47_A.jpg", imgB: "human_eval_pairs/q47_B.jpg" },
-  { prompt: "一幅帝国大厦的抽象画", imgA: "human_eval_pairs/q48_A.jpg", imgB: "human_eval_pairs/q48_B.jpg" },
-  { prompt: "一个戴墨镜的红发女人", imgA: "human_eval_pairs/q49_A.jpg", imgB: "human_eval_pairs/q49_B.jpg" },
-  { prompt: "一颗戴着牛仔帽的橙子", imgA: "human_eval_pairs/q50_A.jpg", imgB: "human_eval_pairs/q50_B.jpg" }
-];
 const N = questions.length;
 const DIMS = ['appeal', 'align', 'overall'];
-const answers = questions.map(() => ({ appeal: null, align: null, overall: null }));
+const answers = questions.map(() => ({appeal: null, align: null, overall: null}));
 let cur = 0;
+let preloaded = 0;
+
+function preloadAll(onProgress, onDone) {
+  let done = 0;
+  questions.forEach(q => {
+    [q.imgA, q.imgB].forEach(src => {
+      const img = new Image();
+      img.onload = img.onerror = () => {
+        done++;
+        onProgress && onProgress(done, N * 2);
+        if (done === N * 2) onDone && onDone();
+      };
+      img.src = BASE_URL + src;
+    });
+  });
+}
 
 function startSurvey() {
-  show('questionScreen');
-  buildDots();
-  renderQ(0, 'none');
+  const btn = document.getElementById('startBtn');
+  const lbl = document.getElementById('startBtnLabel');
+  btn.disabled = true;
+  lbl.textContent = STR.preloading;
+  preloadAll(
+    (d, t) => { lbl.textContent = STR.preloading + ' (' + d + '/' + t + ')'; },
+    () => {
+      btn.disabled = false;
+      lbl.textContent = STR.start_btn;
+      show('questionScreen');
+      buildDots();
+      renderQ(0, 'none');
+    }
+  );
 }
 
 function show(id) {
@@ -697,8 +277,8 @@ function buildDots() {
   questions.forEach((_, i) => {
     const d = document.createElement('div');
     d.className = 'nav-dot';
-    d.id = `dot-${i}`;
-    d.title = `Question ${i + 1}`;
+    d.id = 'dot-' + i;
+    d.title = (STR.q_short || 'Q') + ' ' + (i + 1);
     d.onclick = () => goTo(i);
     wrap.appendChild(d);
   });
@@ -708,27 +288,23 @@ function renderQ(idx, dir) {
   cur = idx;
   const q = questions[idx];
   const card = document.getElementById('qCard');
-
   if (dir !== 'none') {
     card.style.opacity = '0';
     card.style.transform = dir === 'next' ? 'translateX(-28px)' : 'translateX(28px)';
   }
-
   setTimeout(() => {
-    document.getElementById('qNumBadge').textContent = `第 ${idx + 1} 题 / ${N}`;
-    document.getElementById('qPromptText').innerHTML = `描述：<strong>"${q.prompt}"</strong>`;
+    document.getElementById('qNumBadge').textContent = STR.q_badge.replace('{i}', idx + 1).replace('{n}', N);
+    document.getElementById('qPromptText').innerHTML = STR.prompt_label + ': <strong>"' + q.prompt + '"</strong>';
     document.getElementById('imgA').src = BASE_URL + q.imgA;
     document.getElementById('imgB').src = BASE_URL + q.imgB;
-
     DIMS.forEach(dim => {
       ['a', 'b', 'tie'].forEach(c => {
-        const btn = document.getElementById(`v-${dim}-${c}`);
+        const btn = document.getElementById('v-' + dim + '-' + c);
         if (!btn) return;
-        btn.classList.remove(`on-${dim}`);
-        if (answers[idx][dim] === c) btn.classList.add(`on-${dim}`);
+        btn.classList.remove('on-' + dim);
+        if (answers[idx][dim] === c) btn.classList.add('on-' + dim);
       });
     });
-
     card.style.transition = 'none';
     card.style.opacity = '0';
     card.style.transform = dir === 'next' ? 'translateX(28px)' : (dir === 'prev' ? 'translateX(-28px)' : 'translateX(0)');
@@ -737,7 +313,6 @@ function renderQ(idx, dir) {
       card.style.opacity = '1';
       card.style.transform = 'translateX(0)';
     });
-
     updateNav();
     updateProgress();
   }, dir === 'none' ? 0 : 80);
@@ -746,13 +321,12 @@ function renderQ(idx, dir) {
 function vote(dim, choice) {
   answers[cur][dim] = choice;
   ['a', 'b', 'tie'].forEach(c => {
-    const btn = document.getElementById(`v-${dim}-${c}`);
-    btn.classList.remove(`on-${dim}`);
-    if (c === choice) btn.classList.add(`on-${dim}`);
+    const btn = document.getElementById('v-' + dim + '-' + c);
+    btn.classList.remove('on-' + dim);
+    if (c === choice) btn.classList.add('on-' + dim);
   });
   updateProgress();
   updateDots();
-
   const a = answers[cur];
   if (DIMS.every(d => a[d] !== null) && cur < N - 1) {
     setTimeout(() => goTo(cur + 1, 'next'), 340);
@@ -766,23 +340,20 @@ function goTo(idx, dir) {
 }
 
 function handleNext() {
-  if (cur < N - 1) {
-    goTo(cur + 1, 'next');
-  } else {
-    showResult();
-  }
+  if (cur < N - 1) goTo(cur + 1, 'next');
+  else showResult();
 }
 
 function updateNav() {
   document.getElementById('prevBtn').disabled = cur === 0;
   const nextBtn = document.getElementById('nextBtn');
   const allDone = answers.every(a => DIMS.every(d => a[d] !== null));
-
+  const arrow = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   if (cur === N - 1) {
-    nextBtn.innerHTML = '提交 <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    nextBtn.innerHTML = STR.nav_submit + ' ' + arrow;
     nextBtn.disabled = !allDone;
   } else {
-    nextBtn.innerHTML = '下一题 <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    nextBtn.innerHTML = STR.nav_next + ' ' + arrow;
     nextBtn.disabled = false;
   }
   updateDots();
@@ -790,7 +361,7 @@ function updateNav() {
 
 function updateDots() {
   questions.forEach((_, i) => {
-    const d = document.getElementById(`dot-${i}`);
+    const d = document.getElementById('dot-' + i);
     if (!d) return;
     d.className = 'nav-dot';
     if (i === cur) d.classList.add('current');
@@ -801,7 +372,7 @@ function updateDots() {
 function updateProgress() {
   const done = answers.filter(a => DIMS.every(d => a[d] !== null)).length;
   document.getElementById('pBar').style.width = (done / N * 100) + '%';
-  document.getElementById('pLabel').textContent = `${done} / ${N}`;
+  document.getElementById('pLabel').textContent = done + ' / ' + N;
   updateDots();
   updateNav();
 }
@@ -809,59 +380,39 @@ function updateProgress() {
 function showResult() {
   const counts = { appeal:{a:0,b:0,tie:0}, align:{a:0,b:0,tie:0}, overall:{a:0,b:0,tie:0} };
   answers.forEach(a => DIMS.forEach(d => { if (a[d]) counts[d][a[d]]++; }));
-
-  const dimLabels = { appeal: '视觉吸引力', align: '描述匹配度', overall: '综合偏好' };
+  const dimLabels = { appeal: STR.dim_appeal, align: STR.dim_align, overall: STR.dim_overall };
   document.getElementById('statsRow').innerHTML = DIMS.map(d => {
     const {a,b,tie} = counts[d];
     const mx = Math.max(a,b,tie,1);
     const hA = Math.round(a/mx*40), hB = Math.round(b/mx*40), hT = Math.round(tie/mx*40);
-    return `<div class="stat-box">
-      <div class="stat-dim-label">${dimLabels[d]}</div>
-      <div class="stat-bars">
-        <div class="sbar a" style="height:${Math.max(hA,4)}px"></div>
-        <div class="sbar b" style="height:${Math.max(hB,4)}px"></div>
-        <div class="sbar t" style="height:${Math.max(hT,4)}px"></div>
-      </div>
-      <div class="stat-nums">
-        <span class="sn-a">A:${a}</span>
-        <span class="sn-b">B:${b}</span>
-        <span class="sn-t">Tie:${tie}</span>
-      </div>
-    </div>`;
+    return '<div class="stat-box"><div class="stat-dim-label">' + dimLabels[d] + '</div>'
+      + '<div class="stat-bars"><div class="sbar a" style="height:' + Math.max(hA,4) + 'px"></div>'
+      + '<div class="sbar b" style="height:' + Math.max(hB,4) + 'px"></div>'
+      + '<div class="sbar t" style="height:' + Math.max(hT,4) + 'px"></div></div>'
+      + '<div class="stat-nums"><span class="sn-a">A:' + a + '</span><span class="sn-b">B:' + b + '</span><span class="sn-t">' + STR.choice_tie + ':' + tie + '</span></div></div>';
   }).join('');
-
   const chipCls = v => v==='a'?'ca':v==='b'?'cb':v==='tie'?'ct':'cn';
-  const chipTxt = v => v==='a'?'图片 A':v==='b'?'图片 B':v==='tie'?'差不多':'—';
+  const chipTxt = v => v==='a'?STR.choice_a:v==='b'?STR.choice_b:v==='tie'?STR.choice_tie:'—';
   document.getElementById('rtBody').innerHTML = questions.map((q,i) => {
     const a = answers[i];
     const short = q.prompt.length > 48 ? q.prompt.slice(0,48)+'…' : q.prompt;
-    return `<div class="rt-row" onclick="goToQ(${i})">
-      <div class="rt-n">${i+1}</div>
-      <div class="rt-p">${short}</div>
-      <div><span class="chip ${chipCls(a.appeal)}">${chipTxt(a.appeal)}</span></div>
-      <div><span class="chip ${chipCls(a.align)}">${chipTxt(a.align)}</span></div>
-      <div><span class="chip ${chipCls(a.overall)}">${chipTxt(a.overall)}</span></div>
-    </div>`;
+    return '<div class="rt-row" onclick="goToQ(' + i + ')">'
+      + '<div class="rt-n">' + (i+1) + '</div><div class="rt-p">' + short + '</div>'
+      + '<div><span class="chip ' + chipCls(a.appeal) + '">' + chipTxt(a.appeal) + '</span></div>'
+      + '<div><span class="chip ' + chipCls(a.align) + '">' + chipTxt(a.align) + '</span></div>'
+      + '<div><span class="chip ' + chipCls(a.overall) + '">' + chipTxt(a.overall) + '</span></div></div>';
   }).join('');
-
   show('resultScreen');
 }
 
-function goToQ(i) {
-  show('questionScreen');
-  renderQ(i, 'none');
-}
-
-function backToSurvey() {
-  show('questionScreen');
-  renderQ(cur, 'none');
-}
+function goToQ(i) { show('questionScreen'); renderQ(i, 'none'); }
+function backToSurvey() { show('questionScreen'); renderQ(cur, 'none'); }
 
 function exportCSV() {
   let csv = 'index,prompt,visual_appeal,prompt_alignment,overall_preference\n';
   questions.forEach((q,i) => {
     const a = answers[i];
-    csv += `${i+1},"${q.prompt.replace(/"/g,'""')}",${a.appeal||''},${a.align||''},${a.overall||''}\n`;
+    csv += (i+1) + ',"' + q.prompt.replace(/"/g,'""') + '",' + (a.appeal||'') + ',' + (a.align||'') + ',' + (a.overall||'') + '\n';
   });
   const url = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
   const l = document.createElement('a');
@@ -879,7 +430,7 @@ function copyJSON() {
   navigator.clipboard.writeText(JSON.stringify(data,null,2)).then(() => {
     const btn = document.querySelector('.result-actions .btn-f:last-child');
     const orig = btn.textContent;
-    btn.textContent = '已复制!';
+    btn.textContent = STR.copied;
     setTimeout(() => btn.textContent = orig, 2000);
   });
 }
