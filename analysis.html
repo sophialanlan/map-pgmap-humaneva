@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PG-MAP Human Eval — Live Stats</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: #f7f6f3; color: #18181b; min-height: 100vh; padding: 2.5rem 1.5rem; }
+.wrap { max-width: 880px; margin: 0 auto; }
+h1 { font-family: 'DM Serif Display', serif; font-size: 32px; font-weight: 400; margin-bottom: 6px; }
+.sub { color: #52525b; font-size: 14px; margin-bottom: 0.5rem; }
+.meta { font-size: 12px; color: #a1a1aa; margin-bottom: 2rem; display: flex; gap: 14px; flex-wrap: wrap; }
+.meta b { color: #52525b; font-weight: 500; }
+.card { background: #fff; border: 1px solid rgba(0,0,0,0.08); border-radius: 14px; padding: 1.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 1.5rem; }
+.bl-name { font-size: 11px; font-weight: 500; color: #a1a1aa; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+.bl-sub { font-size: 12px; color: #52525b; margin-bottom: 1rem; }
+.win { font-family: 'DM Serif Display', serif; font-size: 44px; line-height: 1; }
+.win.sig { color: #15803d; }
+.win.ns { color: #52525b; }
+.row2 { display: flex; justify-content: space-between; font-size: 12px; color: #52525b; margin-top: 10px; }
+.bar { height: 6px; background: #e4e4e7; border-radius: 4px; overflow: hidden; margin-top: 10px; position: relative; }
+.bar-fill { height: 100%; background: #15803d; border-radius: 4px; transition: width 0.4s; }
+.bar-mid { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: rgba(0,0,0,0.3); }
+.pval { font-size: 11px; color: #a1a1aa; margin-top: 4px; }
+.pval b { color: #18181b; font-weight: 500; }
+.detail { font-size: 13px; color: #52525b; line-height: 1.7; }
+.detail strong { color: #18181b; }
+.notes { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 14px 18px; border-radius: 10px; font-size: 13px; line-height: 1.55; margin-bottom: 1.5rem; }
+.refresh-btn { background: #18181b; color: #fff; border: none; border-radius: 40px; padding: 10px 24px; font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer; }
+.refresh-btn:hover { background: #27272a; }
+.refresh-btn:disabled { opacity: 0.5; cursor: wait; }
+.err { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 14px; border-radius: 10px; font-size: 13px; margin: 1rem 0; }
+@media (max-width: 720px) { .cards { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Live Win-Rate Dashboard</h1>
+  <p class="sub">PG-MAP vs. SDXL Baseline / Tuned-CFG / Universal Guidance — preference rate from human raters.</p>
+  <div class="meta">
+    <span><b>Submissions:</b> <span id="nSubs">—</span></span>
+    <span><b>Total votes:</b> <span id="nVotes">—</span></span>
+    <span><b>Last update:</b> <span id="lastUpdate">—</span></span>
+    <span style="margin-left:auto"><button class="refresh-btn" id="refreshBtn" onclick="refresh()">Refresh</button></span>
+  </div>
+  <div class="notes">
+    Auto-refreshes every 60 s. Win rate is the fraction of judgments where PG-MAP's image was preferred.
+    P-values are two-sided binomial tests against 50%; <b>p &lt; 0.05</b> means the lift is statistically significant.
+  </div>
+  <div id="err" class="err" style="display:none"></div>
+  <div class="cards" id="cards"></div>
+  <div class="card detail" id="footer" style="display:none"></div>
+</div>
+<script>
+const ENDPOINT = '__SET_BY_USER__';
+const BASELINE_INFO = {
+  sdxl_baseline: {label: 'vs. SDXL Baseline', sub: 'paired same-seed (cfg=7.5)'},
+  tuned_cfg:     {label: 'vs. Tuned-CFG',     sub: 'best CFG scale on val split'},
+  ug:            {label: 'vs. Universal Guidance', sub: 'NFE-matched (eta_z*=0.1)'},
+};
+
+// Two-sided binomial p-value via normal approximation (good enough for n>=30).
+function binomP(k, n) {
+  if (n === 0) return 1.0;
+  const p0 = 0.5;
+  const z = (k - n * p0) / Math.sqrt(n * p0 * (1 - p0));
+  // two-sided
+  const erf = x => {
+    const sign = Math.sign(x); x = Math.abs(x);
+    const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+    const t = 1/(1+p*x);
+    const y = 1 - (((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x);
+    return sign * y;
+  };
+  return 2 * (1 - 0.5 * (1 + erf(Math.abs(z) / Math.SQRT2)));
+}
+
+async function refresh() {
+  const btn = document.getElementById('refreshBtn');
+  btn.disabled = true; btn.textContent = 'Loading…';
+  document.getElementById('err').style.display = 'none';
+  if (!ENDPOINT || ENDPOINT.startsWith('__')) {
+    document.getElementById('err').style.display = 'block';
+    document.getElementById('err').textContent = 'Endpoint not configured. Set ENDPOINT in this file (or rebuild after setting SUBMIT_URL).';
+    btn.disabled = false; btn.textContent = 'Refresh';
+    return;
+  }
+  try {
+    const resp = await fetch(ENDPOINT, {cache: 'no-store'});
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    render(data);
+  } catch (e) {
+    console.error(e);
+    document.getElementById('err').style.display = 'block';
+    document.getElementById('err').textContent = 'Could not reach analysis endpoint: ' + e.message;
+  } finally {
+    btn.disabled = false; btn.textContent = 'Refresh';
+  }
+}
+
+function render(data) {
+  document.getElementById('nSubs').textContent = data.n_submissions ?? 0;
+  document.getElementById('nVotes').textContent = data.n_responses ?? 0;
+  document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+  const cards = document.getElementById('cards');
+  cards.innerHTML = '';
+  Object.keys(BASELINE_INFO).forEach(bl => {
+    const info = BASELINE_INFO[bl];
+    const s = (data.stats && data.stats[bl]) || {ours: 0, baseline: 0, n: 0};
+    const wr = s.n ? s.ours / s.n : 0;
+    const p = binomP(s.ours, s.n);
+    const sig = (s.n >= 30) && (p < 0.05);
+    cards.innerHTML += `
+      <div class="card">
+        <div class="bl-name">${info.label}</div>
+        <div class="bl-sub">${info.sub}</div>
+        <div class="win ${sig ? 'sig' : 'ns'}">${(wr*100).toFixed(1)}%</div>
+        <div class="bar"><div class="bar-mid"></div><div class="bar-fill" style="width:${wr*100}%"></div></div>
+        <div class="row2"><span>PG-MAP wins: ${s.ours}</span><span>n = ${s.n}</span></div>
+        <div class="pval">two-sided binomial <b>p = ${s.n ? p.toFixed(4) : 'n/a'}</b>${sig ? ' (significant)' : ''}</div>
+      </div>`;
+  });
+}
+
+refresh();
+setInterval(refresh, 60000);
+</script>
+</body>
+</html>
