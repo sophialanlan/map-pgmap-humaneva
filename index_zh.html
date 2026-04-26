@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Human Evaluation Study</title>
+<title>图像偏好评测</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -476,7 +476,7 @@ body {
 
 <header class="header">
   <div class="header-inner">
-    <div class="header-logo">Human<span>Eval</span></div>
+    <div class="header-logo">人类<span>评测</span></div>
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-inner" id="pBar"></div></div>
       <div class="progress-label" id="pLabel">0 / 50</div>
@@ -487,37 +487,36 @@ body {
 <!-- ── INTRO ── -->
 <div class="screen active" id="introScreen">
   <div class="intro-card">
-    <div class="intro-tag">User Study · Text-to-Image Generation</div>
-    <h1>Image Preference Evaluation</h1>
+    <div class="intro-tag">用户研究 · 文本生成图像</div>
+    <h1>图像偏好评测</h1>
     <p>
-      You will see <strong>50 pairs of images</strong>, each generated from the same text prompt by two different models.
-      For each pair, rate the images along three independent dimensions.
+      本问卷将依次展示 <strong>50 组图片</strong>，每组的两张图由两个不同的模型根据 <strong>同一段文字描述</strong> 生成。请针对每一组从下面三个独立维度做出选择。
     </p>
     <div class="criteria-list">
       <div class="crit-row">
         <div class="crit-dot" style="background:#15803d;"></div>
         <div class="crit-text">
-          <strong>Visual Appeal</strong>
-          <span>Which image looks more aesthetically pleasing, independent of the prompt?</span>
+          <strong>视觉吸引力</strong>
+          <span>哪张图在视觉上更美观、更耐看（不考虑是否符合描述）？</span>
         </div>
       </div>
       <div class="crit-row">
         <div class="crit-dot" style="background:#1d4ed8;"></div>
         <div class="crit-text">
-          <strong>Prompt Alignment</strong>
-          <span>Which image more faithfully depicts what the prompt describes?</span>
+          <strong>描述匹配度</strong>
+          <span>哪张图更准确地呈现了文字描述里的内容？</span>
         </div>
       </div>
       <div class="crit-row">
         <div class="crit-dot" style="background:#6d28d9;"></div>
         <div class="crit-text">
-          <strong>Overall Preference</strong>
-          <span>Considering everything, which image do you prefer overall?</span>
+          <strong>综合偏好</strong>
+          <span>综合所有方面，你整体上更喜欢哪张？</span>
         </div>
       </div>
     </div>
     <button class="start-btn" onclick="startSurvey()">
-      Begin Evaluation
+      开始评测
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
@@ -529,47 +528,47 @@ body {
 
     <div class="q-card" id="qCard">
       <div class="q-prompt-bar">
-        <div class="q-num-badge" id="qNumBadge">Q 1 / 50</div>
+        <div class="q-num-badge" id="qNumBadge">第 1 题 / 50</div>
         <div class="q-prompt-text" id="qPromptText"></div>
       </div>
       <div class="q-images">
         <div class="q-img-col">
           <div class="q-img-wrap">
-            <img id="imgA" src="" alt="Image A" />
-            <div class="img-label">Image A</div>
+            <img id="imgA" src="" alt="图片 A" />
+            <div class="img-label">图片 A</div>
           </div>
         </div>
         <div class="q-img-col">
           <div class="q-img-wrap">
-            <img id="imgB" src="" alt="Image B" />
-            <div class="img-label">Image B</div>
+            <img id="imgB" src="" alt="图片 B" />
+            <div class="img-label">图片 B</div>
           </div>
         </div>
       </div>
       <div class="q-voting">
         <div class="vote-row">
-          <div class="vote-dim"><div class="dim-dot" style="background:#15803d;"></div>Visual Appeal</div>
+          <div class="vote-dim"><div class="dim-dot" style="background:#15803d;"></div>视觉吸引力</div>
           <div class="vote-choices">
-            <button class="vchoice" id="v-appeal-a" onclick="vote('appeal','a')"><span class="ck">✓</span> Image A</button>
-            <button class="vchoice" id="v-appeal-b" onclick="vote('appeal','b')"><span class="ck">✓</span> Image B</button>
+            <button class="vchoice" id="v-appeal-a" onclick="vote('appeal','a')"><span class="ck">✓</span> 图片 A</button>
+            <button class="vchoice" id="v-appeal-b" onclick="vote('appeal','b')"><span class="ck">✓</span> 图片 B</button>
           </div>
-          <button class="vtie" id="v-appeal-tie" onclick="vote('appeal','tie')">Tie</button>
+          <button class="vtie" id="v-appeal-tie" onclick="vote('appeal','tie')">差不多</button>
         </div>
         <div class="vote-row">
-          <div class="vote-dim"><div class="dim-dot" style="background:#1d4ed8;"></div>Prompt Alignment</div>
+          <div class="vote-dim"><div class="dim-dot" style="background:#1d4ed8;"></div>描述匹配度</div>
           <div class="vote-choices">
-            <button class="vchoice" id="v-align-a" onclick="vote('align','a')"><span class="ck">✓</span> Image A</button>
-            <button class="vchoice" id="v-align-b" onclick="vote('align','b')"><span class="ck">✓</span> Image B</button>
+            <button class="vchoice" id="v-align-a" onclick="vote('align','a')"><span class="ck">✓</span> 图片 A</button>
+            <button class="vchoice" id="v-align-b" onclick="vote('align','b')"><span class="ck">✓</span> 图片 B</button>
           </div>
-          <button class="vtie" id="v-align-tie" onclick="vote('align','tie')">Tie</button>
+          <button class="vtie" id="v-align-tie" onclick="vote('align','tie')">差不多</button>
         </div>
         <div class="vote-row">
-          <div class="vote-dim"><div class="dim-dot" style="background:#6d28d9;"></div>Overall Preference</div>
+          <div class="vote-dim"><div class="dim-dot" style="background:#6d28d9;"></div>综合偏好</div>
           <div class="vote-choices">
-            <button class="vchoice" id="v-overall-a" onclick="vote('overall','a')"><span class="ck">✓</span> Image A</button>
-            <button class="vchoice" id="v-overall-b" onclick="vote('overall','b')"><span class="ck">✓</span> Image B</button>
+            <button class="vchoice" id="v-overall-a" onclick="vote('overall','a')"><span class="ck">✓</span> 图片 A</button>
+            <button class="vchoice" id="v-overall-b" onclick="vote('overall','b')"><span class="ck">✓</span> 图片 B</button>
           </div>
-          <button class="vtie" id="v-overall-tie" onclick="vote('overall','tie')">Tie</button>
+          <button class="vtie" id="v-overall-tie" onclick="vote('overall','tie')">差不多</button>
         </div>
       </div>
     </div>
@@ -577,11 +576,11 @@ body {
     <div class="q-nav">
       <button class="nav-btn" id="prevBtn" onclick="goTo(cur-1)" disabled>
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 12L3 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Back
+        上一题
       </button>
       <div class="nav-dots" id="navDots"></div>
       <button class="nav-btn primary" id="nextBtn" onclick="handleNext()">
-        Next
+        下一题
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </div>
@@ -596,24 +595,24 @@ body {
       <div class="result-icon">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
       </div>
-      <h2 class="result-title">Evaluation Complete</h2>
-      <p class="result-sub">Thank you for participating. Summary of your responses below.</p>
+      <h2 class="result-title">评测完成</h2>
+      <p class="result-sub">感谢参与！下方是你的回答汇总。</p>
     </div>
 
     <div class="stats-row" id="statsRow"></div>
 
     <div class="result-table">
       <div class="rt-head">
-        <div>#</div><div>Prompt</div>
-        <div>Appeal</div><div>Alignment</div><div>Overall</div>
+        <div>#</div><div>描述</div>
+        <div>吸引力</div><div>匹配度</div><div>综合</div>
       </div>
       <div class="rt-scroll" id="rtBody"></div>
     </div>
 
     <div class="result-actions">
-      <button class="btn-o" onclick="backToSurvey()">← Review Answers</button>
-      <button class="btn-f" onclick="exportCSV()">Export CSV</button>
-      <button class="btn-f" onclick="copyJSON()">Copy JSON</button>
+      <button class="btn-o" onclick="backToSurvey()">← 回看答案</button>
+      <button class="btn-f" onclick="exportCSV()">导出 CSV</button>
+      <button class="btn-f" onclick="copyJSON()">复制 JSON</button>
     </div>
   </div>
 </div>
@@ -625,56 +624,56 @@ body {
 const BASE_URL = 'https://cdn.jsdelivr.net/gh/sophialanlan/map-pgmap-humaneva@main/';
 
 const questions = [
-  { prompt: "a shiba inu", imgA: "human_eval_pairs/q01_A.jpg", imgB: "human_eval_pairs/q01_B.jpg" },
-  { prompt: "a drawing of a screwdriver", imgA: "human_eval_pairs/q02_A.jpg", imgB: "human_eval_pairs/q02_B.jpg" },
-  { prompt: "a pumpkin with a candle in it", imgA: "human_eval_pairs/q03_A.jpg", imgB: "human_eval_pairs/q03_B.jpg" },
-  { prompt: "a wood cabin", imgA: "human_eval_pairs/q04_A.jpg", imgB: "human_eval_pairs/q04_B.jpg" },
-  { prompt: "a man reading a book with a prism on its cover", imgA: "human_eval_pairs/q05_A.jpg", imgB: "human_eval_pairs/q05_B.jpg" },
-  { prompt: "an avocado on a table", imgA: "human_eval_pairs/q06_A.jpg", imgB: "human_eval_pairs/q06_B.jpg" },
-  { prompt: "a woman with tan skin in blue jeans and yellow shirt", imgA: "human_eval_pairs/q07_A.jpg", imgB: "human_eval_pairs/q07_B.jpg" },
-  { prompt: "an abstract painting of a waterfall", imgA: "human_eval_pairs/q08_A.jpg", imgB: "human_eval_pairs/q08_B.jpg" },
-  { prompt: "a man chasing a horse", imgA: "human_eval_pairs/q09_A.jpg", imgB: "human_eval_pairs/q09_B.jpg" },
-  { prompt: "A cat dreaming about becoming a tiger", imgA: "human_eval_pairs/q10_A.jpg", imgB: "human_eval_pairs/q10_B.jpg" },
-  { prompt: "a nerdy bear wearing glasses and a bowtie", imgA: "human_eval_pairs/q11_A.jpg", imgB: "human_eval_pairs/q11_B.jpg" },
-  { prompt: "A teddy bear wearing a motorcycle helmet and cape is standing in front of Loch Awe with Kilchurn Castle behind him", imgA: "human_eval_pairs/q12_A.jpg", imgB: "human_eval_pairs/q12_B.jpg" },
-  { prompt: "an inflatable rabbit held up in the air by the geyser Old Faithful", imgA: "human_eval_pairs/q13_A.jpg", imgB: "human_eval_pairs/q13_B.jpg" },
-  { prompt: "a two lane road with a bright yellow line", imgA: "human_eval_pairs/q14_A.jpg", imgB: "human_eval_pairs/q14_B.jpg" },
-  { prompt: "a team playing baseball at the beach", imgA: "human_eval_pairs/q15_A.jpg", imgB: "human_eval_pairs/q15_B.jpg" },
-  { prompt: "a basketball hoop with a large blue ball stuck in it", imgA: "human_eval_pairs/q16_A.jpg", imgB: "human_eval_pairs/q16_B.jpg" },
-  { prompt: "a selfie of an old man with a white beard", imgA: "human_eval_pairs/q17_A.jpg", imgB: "human_eval_pairs/q17_B.jpg" },
-  { prompt: "metal", imgA: "human_eval_pairs/q18_A.jpg", imgB: "human_eval_pairs/q18_B.jpg" },
-  { prompt: "an oil painting of a hamster dragon", imgA: "human_eval_pairs/q19_A.jpg", imgB: "human_eval_pairs/q19_B.jpg" },
-  { prompt: "a drawing of a man standing under a tree", imgA: "human_eval_pairs/q20_A.jpg", imgB: "human_eval_pairs/q20_B.jpg" },
-  { prompt: "A map of the United States made out sushi. It is on a table next to a glass of red wine.", imgA: "human_eval_pairs/q21_A.jpg", imgB: "human_eval_pairs/q21_B.jpg" },
-  { prompt: "a sketch of a skyscraper", imgA: "human_eval_pairs/q22_A.jpg", imgB: "human_eval_pairs/q22_B.jpg" },
-  { prompt: "Siberian husky playing the piano.", imgA: "human_eval_pairs/q23_A.jpg", imgB: "human_eval_pairs/q23_B.jpg" },
-  { prompt: "Times Square at night", imgA: "human_eval_pairs/q24_A.jpg", imgB: "human_eval_pairs/q24_B.jpg" },
-  { prompt: "a corgi’s head depicted as an explosion of a nebula", imgA: "human_eval_pairs/q25_A.jpg", imgB: "human_eval_pairs/q25_B.jpg" },
-  { prompt: "a space elevator", imgA: "human_eval_pairs/q26_A.jpg", imgB: "human_eval_pairs/q26_B.jpg" },
-  { prompt: "a fire hydrant", imgA: "human_eval_pairs/q27_A.jpg", imgB: "human_eval_pairs/q27_B.jpg" },
-  { prompt: "the statue of Liberty next to the Washington Monument", imgA: "human_eval_pairs/q28_A.jpg", imgB: "human_eval_pairs/q28_B.jpg" },
-  { prompt: "a corgi wearing a red bowtie and a purple party hat", imgA: "human_eval_pairs/q29_A.jpg", imgB: "human_eval_pairs/q29_B.jpg" },
-  { prompt: "three elephants standing on top of each other", imgA: "human_eval_pairs/q30_A.jpg", imgB: "human_eval_pairs/q30_B.jpg" },
-  { prompt: "A section of the Great Wall in the mountains. detailed charcoal sketch.", imgA: "human_eval_pairs/q31_A.jpg", imgB: "human_eval_pairs/q31_B.jpg" },
-  { prompt: "the grand canyon on a cloudy day", imgA: "human_eval_pairs/q32_A.jpg", imgB: "human_eval_pairs/q32_B.jpg" },
-  { prompt: "a helicopter hovering over Times Square", imgA: "human_eval_pairs/q33_A.jpg", imgB: "human_eval_pairs/q33_B.jpg" },
-  { prompt: "three black cats standing next to two orange cats", imgA: "human_eval_pairs/q34_A.jpg", imgB: "human_eval_pairs/q34_B.jpg" },
-  { prompt: "a horse chewing a large blue flower", imgA: "human_eval_pairs/q35_A.jpg", imgB: "human_eval_pairs/q35_B.jpg" },
-  { prompt: "The Statue of Liberty in Minecraft", imgA: "human_eval_pairs/q36_A.jpg", imgB: "human_eval_pairs/q36_B.jpg" },
-  { prompt: "a koi fish flying in the sky", imgA: "human_eval_pairs/q37_A.jpg", imgB: "human_eval_pairs/q37_B.jpg" },
-  { prompt: "the eye of the planet Jupiter", imgA: "human_eval_pairs/q38_A.jpg", imgB: "human_eval_pairs/q38_B.jpg" },
-  { prompt: "a small house", imgA: "human_eval_pairs/q39_A.jpg", imgB: "human_eval_pairs/q39_B.jpg" },
-  { prompt: "a coloring book page of a horse next to a stream", imgA: "human_eval_pairs/q40_A.jpg", imgB: "human_eval_pairs/q40_B.jpg" },
-  { prompt: "a comic about a boy and a tiger", imgA: "human_eval_pairs/q41_A.jpg", imgB: "human_eval_pairs/q41_B.jpg" },
-  { prompt: "the door of knowing, a portal brightly opening the way through darkness. abstract anime landscape oil painting.", imgA: "human_eval_pairs/q42_A.jpg", imgB: "human_eval_pairs/q42_B.jpg" },
-  { prompt: "a whale breaching in front of the Sydney Opera House", imgA: "human_eval_pairs/q43_A.jpg", imgB: "human_eval_pairs/q43_B.jpg" },
-  { prompt: "A map of the United States made out of sushi on the table.", imgA: "human_eval_pairs/q44_A.jpg", imgB: "human_eval_pairs/q44_B.jpg" },
-  { prompt: "a mouse sitting next to a computer mouse", imgA: "human_eval_pairs/q45_A.jpg", imgB: "human_eval_pairs/q45_B.jpg" },
-  { prompt: "the International Space Station", imgA: "human_eval_pairs/q46_A.jpg", imgB: "human_eval_pairs/q46_B.jpg" },
-  { prompt: "the word 'START' written on a street surface", imgA: "human_eval_pairs/q47_A.jpg", imgB: "human_eval_pairs/q47_B.jpg" },
-  { prompt: "an abstract painting of the Empire State Building", imgA: "human_eval_pairs/q48_A.jpg", imgB: "human_eval_pairs/q48_B.jpg" },
-  { prompt: "a woman with sunglasses and red hair", imgA: "human_eval_pairs/q49_A.jpg", imgB: "human_eval_pairs/q49_B.jpg" },
-  { prompt: "an orange wearing a cowboy hat", imgA: "human_eval_pairs/q50_A.jpg", imgB: "human_eval_pairs/q50_B.jpg" }
+  { prompt: "一只柴犬", imgA: "human_eval_pairs/q01_A.jpg", imgB: "human_eval_pairs/q01_B.jpg" },
+  { prompt: "一把螺丝刀的素描", imgA: "human_eval_pairs/q02_A.jpg", imgB: "human_eval_pairs/q02_B.jpg" },
+  { prompt: "一个里面有蜡烛的南瓜", imgA: "human_eval_pairs/q03_A.jpg", imgB: "human_eval_pairs/q03_B.jpg" },
+  { prompt: "一栋木屋", imgA: "human_eval_pairs/q04_A.jpg", imgB: "human_eval_pairs/q04_B.jpg" },
+  { prompt: "一个男人在读一本封面上有棱镜的书", imgA: "human_eval_pairs/q05_A.jpg", imgB: "human_eval_pairs/q05_B.jpg" },
+  { prompt: "桌子上的一颗牛油果", imgA: "human_eval_pairs/q06_A.jpg", imgB: "human_eval_pairs/q06_B.jpg" },
+  { prompt: "一个皮肤晒成棕色、穿着蓝色牛仔裤和黄色衬衫的女人", imgA: "human_eval_pairs/q07_A.jpg", imgB: "human_eval_pairs/q07_B.jpg" },
+  { prompt: "一幅瀑布的抽象画", imgA: "human_eval_pairs/q08_A.jpg", imgB: "human_eval_pairs/q08_B.jpg" },
+  { prompt: "一个男人在追一匹马", imgA: "human_eval_pairs/q09_A.jpg", imgB: "human_eval_pairs/q09_B.jpg" },
+  { prompt: "一只梦想变成老虎的猫", imgA: "human_eval_pairs/q10_A.jpg", imgB: "human_eval_pairs/q10_B.jpg" },
+  { prompt: "一只戴眼镜系领结的书呆子小熊", imgA: "human_eval_pairs/q11_A.jpg", imgB: "human_eval_pairs/q11_B.jpg" },
+  { prompt: "一只戴着摩托车头盔、披着披风的泰迪熊站在阿威湖(Loch Awe)前，身后是基尔丘恩城堡(Kilchurn Castle)", imgA: "human_eval_pairs/q12_A.jpg", imgB: "human_eval_pairs/q12_B.jpg" },
+  { prompt: "一只被老忠实间歇泉冲到空中的充气兔子", imgA: "human_eval_pairs/q13_A.jpg", imgB: "human_eval_pairs/q13_B.jpg" },
+  { prompt: "一条带亮黄色分道线的双车道公路", imgA: "human_eval_pairs/q14_A.jpg", imgB: "human_eval_pairs/q14_B.jpg" },
+  { prompt: "一支球队在海滩上打棒球", imgA: "human_eval_pairs/q15_A.jpg", imgB: "human_eval_pairs/q15_B.jpg" },
+  { prompt: "一个篮筐里卡着一个大蓝球", imgA: "human_eval_pairs/q16_A.jpg", imgB: "human_eval_pairs/q16_B.jpg" },
+  { prompt: "一个白胡子老人的自拍", imgA: "human_eval_pairs/q17_A.jpg", imgB: "human_eval_pairs/q17_B.jpg" },
+  { prompt: "金属", imgA: "human_eval_pairs/q18_A.jpg", imgB: "human_eval_pairs/q18_B.jpg" },
+  { prompt: "一幅仓鼠龙的油画", imgA: "human_eval_pairs/q19_A.jpg", imgB: "human_eval_pairs/q19_B.jpg" },
+  { prompt: "一个男人站在树下的素描", imgA: "human_eval_pairs/q20_A.jpg", imgB: "human_eval_pairs/q20_B.jpg" },
+  { prompt: "一张用寿司拼成的美国地图，放在桌上，旁边有一杯红酒", imgA: "human_eval_pairs/q21_A.jpg", imgB: "human_eval_pairs/q21_B.jpg" },
+  { prompt: "一栋摩天大楼的速写", imgA: "human_eval_pairs/q22_A.jpg", imgB: "human_eval_pairs/q22_B.jpg" },
+  { prompt: "一只西伯利亚哈士奇在弹钢琴", imgA: "human_eval_pairs/q23_A.jpg", imgB: "human_eval_pairs/q23_B.jpg" },
+  { prompt: "夜晚的时代广场", imgA: "human_eval_pairs/q24_A.jpg", imgB: "human_eval_pairs/q24_B.jpg" },
+  { prompt: "一颗柯基的头被描绘成星云爆炸", imgA: "human_eval_pairs/q25_A.jpg", imgB: "human_eval_pairs/q25_B.jpg" },
+  { prompt: "一座太空电梯", imgA: "human_eval_pairs/q26_A.jpg", imgB: "human_eval_pairs/q26_B.jpg" },
+  { prompt: "一个消防栓", imgA: "human_eval_pairs/q27_A.jpg", imgB: "human_eval_pairs/q27_B.jpg" },
+  { prompt: "自由女神像旁边的华盛顿纪念碑", imgA: "human_eval_pairs/q28_A.jpg", imgB: "human_eval_pairs/q28_B.jpg" },
+  { prompt: "一只戴着红色领结和紫色派对帽的柯基", imgA: "human_eval_pairs/q29_A.jpg", imgB: "human_eval_pairs/q29_B.jpg" },
+  { prompt: "三头大象叠罗汉站在一起", imgA: "human_eval_pairs/q30_A.jpg", imgB: "human_eval_pairs/q30_B.jpg" },
+  { prompt: "山中一段长城的精细炭笔素描", imgA: "human_eval_pairs/q31_A.jpg", imgB: "human_eval_pairs/q31_B.jpg" },
+  { prompt: "阴天的大峡谷", imgA: "human_eval_pairs/q32_A.jpg", imgB: "human_eval_pairs/q32_B.jpg" },
+  { prompt: "一架直升机悬停在时代广场上空", imgA: "human_eval_pairs/q33_A.jpg", imgB: "human_eval_pairs/q33_B.jpg" },
+  { prompt: "三只黑猫站在两只橘猫旁边", imgA: "human_eval_pairs/q34_A.jpg", imgB: "human_eval_pairs/q34_B.jpg" },
+  { prompt: "一匹马在嚼一朵大蓝花", imgA: "human_eval_pairs/q35_A.jpg", imgB: "human_eval_pairs/q35_B.jpg" },
+  { prompt: "我的世界(Minecraft)风格的自由女神像", imgA: "human_eval_pairs/q36_A.jpg", imgB: "human_eval_pairs/q36_B.jpg" },
+  { prompt: "一条飞在天上的锦鲤", imgA: "human_eval_pairs/q37_A.jpg", imgB: "human_eval_pairs/q37_B.jpg" },
+  { prompt: "木星之眼", imgA: "human_eval_pairs/q38_A.jpg", imgB: "human_eval_pairs/q38_B.jpg" },
+  { prompt: "一栋小房子", imgA: "human_eval_pairs/q39_A.jpg", imgB: "human_eval_pairs/q39_B.jpg" },
+  { prompt: "涂色书风格的一页：一匹马站在小溪旁", imgA: "human_eval_pairs/q40_A.jpg", imgB: "human_eval_pairs/q40_B.jpg" },
+  { prompt: "一部关于男孩与老虎的漫画", imgA: "human_eval_pairs/q41_A.jpg", imgB: "human_eval_pairs/q41_B.jpg" },
+  { prompt: "知识之门，一扇在黑暗中明亮开启的门户。抽象动漫风景油画", imgA: "human_eval_pairs/q42_A.jpg", imgB: "human_eval_pairs/q42_B.jpg" },
+  { prompt: "一头鲸鱼在悉尼歌剧院前跃出水面", imgA: "human_eval_pairs/q43_A.jpg", imgB: "human_eval_pairs/q43_B.jpg" },
+  { prompt: "一张桌上用寿司拼成的美国地图", imgA: "human_eval_pairs/q44_A.jpg", imgB: "human_eval_pairs/q44_B.jpg" },
+  { prompt: "一只小老鼠坐在一只电脑鼠标旁边", imgA: "human_eval_pairs/q45_A.jpg", imgB: "human_eval_pairs/q45_B.jpg" },
+  { prompt: "国际空间站", imgA: "human_eval_pairs/q46_A.jpg", imgB: "human_eval_pairs/q46_B.jpg" },
+  { prompt: "写在街道路面上的单词 'START'", imgA: "human_eval_pairs/q47_A.jpg", imgB: "human_eval_pairs/q47_B.jpg" },
+  { prompt: "一幅帝国大厦的抽象画", imgA: "human_eval_pairs/q48_A.jpg", imgB: "human_eval_pairs/q48_B.jpg" },
+  { prompt: "一个戴墨镜的红发女人", imgA: "human_eval_pairs/q49_A.jpg", imgB: "human_eval_pairs/q49_B.jpg" },
+  { prompt: "一颗戴着牛仔帽的橙子", imgA: "human_eval_pairs/q50_A.jpg", imgB: "human_eval_pairs/q50_B.jpg" }
 ];
 const N = questions.length;
 const DIMS = ['appeal', 'align', 'overall'];
@@ -716,8 +715,8 @@ function renderQ(idx, dir) {
   }
 
   setTimeout(() => {
-    document.getElementById('qNumBadge').textContent = `Q ${idx + 1} / ${N}`;
-    document.getElementById('qPromptText').innerHTML = `Prompt: <strong>"${q.prompt}"</strong>`;
+    document.getElementById('qNumBadge').textContent = `第 ${idx + 1} 题 / ${N}`;
+    document.getElementById('qPromptText').innerHTML = `描述：<strong>"${q.prompt}"</strong>`;
     document.getElementById('imgA').src = BASE_URL + q.imgA;
     document.getElementById('imgB').src = BASE_URL + q.imgB;
 
@@ -780,10 +779,10 @@ function updateNav() {
   const allDone = answers.every(a => DIMS.every(d => a[d] !== null));
 
   if (cur === N - 1) {
-    nextBtn.innerHTML = 'Submit <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    nextBtn.innerHTML = '提交 <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     nextBtn.disabled = !allDone;
   } else {
-    nextBtn.innerHTML = 'Next <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    nextBtn.innerHTML = '下一题 <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     nextBtn.disabled = false;
   }
   updateDots();
@@ -811,7 +810,7 @@ function showResult() {
   const counts = { appeal:{a:0,b:0,tie:0}, align:{a:0,b:0,tie:0}, overall:{a:0,b:0,tie:0} };
   answers.forEach(a => DIMS.forEach(d => { if (a[d]) counts[d][a[d]]++; }));
 
-  const dimLabels = { appeal: 'Visual Appeal', align: 'Prompt Alignment', overall: 'Overall Preference' };
+  const dimLabels = { appeal: '视觉吸引力', align: '描述匹配度', overall: '综合偏好' };
   document.getElementById('statsRow').innerHTML = DIMS.map(d => {
     const {a,b,tie} = counts[d];
     const mx = Math.max(a,b,tie,1);
@@ -832,7 +831,7 @@ function showResult() {
   }).join('');
 
   const chipCls = v => v==='a'?'ca':v==='b'?'cb':v==='tie'?'ct':'cn';
-  const chipTxt = v => v==='a'?'Img A':v==='b'?'Img B':v==='tie'?'Tie':'—';
+  const chipTxt = v => v==='a'?'图片 A':v==='b'?'图片 B':v==='tie'?'差不多':'—';
   document.getElementById('rtBody').innerHTML = questions.map((q,i) => {
     const a = answers[i];
     const short = q.prompt.length > 48 ? q.prompt.slice(0,48)+'…' : q.prompt;
@@ -880,7 +879,7 @@ function copyJSON() {
   navigator.clipboard.writeText(JSON.stringify(data,null,2)).then(() => {
     const btn = document.querySelector('.result-actions .btn-f:last-child');
     const orig = btn.textContent;
-    btn.textContent = 'Copied!';
+    btn.textContent = '已复制!';
     setTimeout(() => btn.textContent = orig, 2000);
   });
 }
