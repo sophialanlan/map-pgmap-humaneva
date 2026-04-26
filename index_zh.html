@@ -13,8 +13,6 @@
   --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.16);
   --accent: #1d4ed8; --accent-bg: #eff6ff;
   --green: #15803d; --green-bg: #f0fdf4; --green-border: #bbf7d0;
-  --amber: #92400e; --amber-bg: #fffbeb; --amber-border: #fde68a;
-  --purple: #6d28d9; --purple-bg: #f5f3ff; --purple-border: #ddd6fe;
   --shadow: 0 4px 24px rgba(0,0,0,0.08); --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
   --radius: 12px; --radius-lg: 20px;
 }
@@ -27,8 +25,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .progress-bar { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
 .progress-inner { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
 .progress-label { font-size: 13px; color: var(--text3); white-space: nowrap; }
-.preload-banner { font-size: 12px; color: var(--text3); padding: 4px 14px; text-align: right; background: var(--surface); border-bottom: 1px solid var(--border); display: none; }
-.preload-banner.visible { display: block; }
 
 .screen { display: none; flex: 1; }
 .screen.active { display: flex; }
@@ -37,51 +33,38 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .intro-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 3rem; max-width: 640px; width: 100%; box-shadow: var(--shadow); }
 .intro-tag { display: inline-block; background: var(--accent-bg); color: var(--accent); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 16px; }
 .intro-card h1 { font-family: 'DM Serif Display', serif; font-size: 30px; font-weight: 400; margin-bottom: 14px; line-height: 1.2; }
-.intro-card p { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 1.75rem; }
-.criteria-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 2rem; }
-.crit-row { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; background: var(--bg); border-radius: var(--radius); border: 1px solid var(--border); }
-.crit-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
-.crit-text strong { font-size: 13px; font-weight: 500; display: block; margin-bottom: 2px; }
-.crit-text span { font-size: 13px; color: var(--text2); }
+.intro-card p { font-size: 15px; color: var(--text2); line-height: 1.7; margin-bottom: 1.25rem; }
+.intro-tip { font-size: 14px; color: var(--text); background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 2rem; line-height: 1.55; }
+.intro-tip strong { color: var(--accent); }
 .start-btn { width: 100%; padding: 14px; background: var(--text); color: #fff; border: none; border-radius: 40px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .start-btn:hover { background: #27272a; transform: translateY(-1px); box-shadow: var(--shadow); }
 .start-btn:disabled { background: var(--text3); cursor: wait; }
 
 #questionScreen { flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem 1.5rem 2rem; }
-.q-wrap { width: 100%; max-width: 860px; position: relative; }
+.q-wrap { width: 100%; max-width: 920px; position: relative; }
 .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; transition: opacity 0.22s ease, transform 0.22s ease; }
 
 .q-prompt-bar { padding: 1.1rem 1.75rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
 .q-num-badge { background: var(--surface2); color: var(--text2); font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
-.q-prompt-text { font-size: 14px; color: var(--text2); line-height: 1.5; }
+.q-prompt-text { font-size: 15px; color: var(--text2); line-height: 1.5; }
 .q-prompt-text strong { color: var(--text); font-weight: 500; }
 
-.q-images { display: grid; grid-template-columns: 1fr 1fr; }
-.q-img-col { position: relative; }
+.q-images { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.q-img-col { position: relative; cursor: pointer; transition: background 0.15s, transform 0.15s; user-select: none; }
 .q-img-col:first-child { border-right: 1px solid var(--border); }
+.q-img-col:hover { background: var(--accent-bg); }
+.q-img-col:hover .img-pick { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.q-img-col.picked { background: var(--green-bg); }
+.q-img-col.picked .img-pick { opacity: 1; transform: translate(-50%, -50%) scale(1); background: var(--green); }
 .q-img-wrap { position: relative; background: var(--surface2); overflow: hidden; }
-.q-img-wrap img { width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #000; display: block; }
+.q-img-wrap img { width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #000; display: block; pointer-events: none; }
 .img-label { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.52); color: #fff; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; padding: 3px 10px; border-radius: 20px; backdrop-filter: blur(4px); }
+.img-pick { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8); width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; opacity: 0; transition: all 0.15s; pointer-events: none; box-shadow: 0 6px 24px rgba(0,0,0,0.25); }
 
-.q-voting { padding: 1rem 1.75rem 1.25rem; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
-.vote-row { display: flex; align-items: center; gap: 10px; }
-.vote-dim { width: 148px; flex-shrink: 0; display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 500; color: var(--text2); }
-.dim-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.vote-choices { display: flex; gap: 6px; flex: 1; }
-.vchoice { flex: 1; padding: 7px 0; border: 1.5px solid var(--border2); border-radius: 8px; background: var(--surface); color: var(--text2); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.14s; display: flex; align-items: center; justify-content: center; gap: 5px; }
-.vchoice:hover { background: var(--surface2); }
-.vchoice .ck { display: none; font-size: 11px; }
-.vchoice.on-appeal { background: var(--green-bg); border-color: var(--green); color: var(--green); }
-.vchoice.on-align { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
-.vchoice.on-overall { background: var(--purple-bg); border-color: var(--purple); color: var(--purple); }
-.vchoice.on-appeal .ck, .vchoice.on-align .ck, .vchoice.on-overall .ck { display: inline; }
-
-.vtie { padding: 7px 12px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text3); font-family: 'DM Sans', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.14s; white-space: nowrap; }
-.vtie:hover { background: var(--surface2); color: var(--text2); }
-.vtie.on-appeal, .vtie.on-align, .vtie.on-overall { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
+.q-hint { padding: 0.9rem 1.75rem 1.1rem; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--text3); }
 
 .q-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 1.25rem; padding: 0 0.25rem; }
-.nav-dots { display: flex; gap: 5px; flex: 1; justify-content: center; flex-wrap: wrap; max-width: 420px; padding: 0 1rem; }
+.nav-dots { display: flex; gap: 5px; flex: 1; justify-content: center; flex-wrap: wrap; max-width: 480px; padding: 0 1rem; }
 .nav-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border2); cursor: pointer; transition: background 0.2s, transform 0.15s; }
 .nav-dot:hover { transform: scale(1.4); }
 .nav-dot.done { background: var(--accent); }
@@ -100,38 +83,36 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .result-icon { width: 60px; height: 60px; background: var(--green-bg); border: 1px solid var(--green-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
 .result-title { font-family: 'DM Serif Display', serif; font-size: 26px; font-weight: 400; margin-bottom: 6px; }
 .result-sub { font-size: 14px; color: var(--text2); }
-.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.5rem; }
-.stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1rem; text-align: center; }
-.stat-dim-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 10px; }
-.stat-bars { display: flex; gap: 6px; justify-content: center; align-items: flex-end; height: 44px; margin-bottom: 8px; }
-.sbar { width: 26px; border-radius: 3px 3px 0 0; min-height: 4px; }
-.sbar.a { background: #bbf7d0; } .sbar.b { background: #bfdbfe; } .sbar.t { background: #fde68a; width: 18px; }
-.stat-nums { display: flex; gap: 6px; justify-content: center; font-size: 12px; font-weight: 500; }
-.sn-a { color: var(--green); } .sn-b { color: var(--accent); } .sn-t { color: var(--amber); }
+
+.result-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem; }
+.sum-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1rem; text-align: center; }
+.sum-side { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 8px; }
+.sum-count { font-family: 'DM Serif Display', serif; font-size: 38px; font-weight: 400; color: var(--text); }
+.sum-pct { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
 .result-table { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
-.rt-head { display: grid; grid-template-columns: 36px 1fr 86px 86px 86px; gap: 6px; padding: 9px 14px; background: var(--surface2); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); }
+.rt-head { display: grid; grid-template-columns: 36px 1fr 88px; gap: 6px; padding: 9px 14px; background: var(--surface2); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); }
 .rt-scroll { max-height: 340px; overflow-y: auto; }
-.rt-row { display: grid; grid-template-columns: 36px 1fr 86px 86px 86px; gap: 6px; padding: 9px 14px; border-bottom: 1px solid var(--border); align-items: center; font-size: 12px; cursor: pointer; transition: background 0.1s; }
+.rt-row { display: grid; grid-template-columns: 36px 1fr 88px; gap: 6px; padding: 9px 14px; border-bottom: 1px solid var(--border); align-items: center; font-size: 13px; cursor: pointer; transition: background 0.1s; }
 .rt-row:last-child { border-bottom: none; }
 .rt-row:hover { background: var(--bg); }
 .rt-n { color: var(--text3); font-size: 11px; }
 .rt-p { color: var(--text); line-height: 1.4; }
-.chip { display: inline-block; padding: 3px 7px; border-radius: 6px; font-size: 11px; font-weight: 500; text-align: center; }
+.chip { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 500; text-align: center; }
 .ca { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
 .cb { background: var(--accent-bg); color: var(--accent); border: 1px solid #bfdbfe; }
-.ct { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
 .cn { background: var(--surface2); color: var(--text3); border: 1px solid var(--border); }
+
 .result-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 .btn-o { padding: 11px 26px; border-radius: 40px; border: 1.5px solid var(--border2); background: var(--surface); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; transition: background 0.15s; }
 .btn-o:hover { background: var(--surface2); }
 .btn-f { padding: 11px 26px; border-radius: 40px; border: none; background: var(--text); color: #fff; font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; transition: background 0.15s; }
 .btn-f:hover { background: #27272a; }
+
 @media (max-width: 580px) {
-  .q-voting { padding: 0.875rem 1rem; }
-  .vote-dim { width: 104px; font-size: 11px; }
   .intro-card { padding: 1.75rem; }
-  .stats-row { grid-template-columns: 1fr; }
-  .rt-head, .rt-row { grid-template-columns: 28px 1fr 70px 70px 70px; }
+  .result-summary { grid-template-columns: 1fr; }
+  .rt-head, .rt-row { grid-template-columns: 28px 1fr 70px; }
 }
 </style>
 </head>
@@ -146,21 +127,13 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     </div>
   </div>
 </header>
-<div class="preload-banner" id="preloadBanner">正在预加载图片，仅首次需要等待。</div>
 
 <div class="screen active" id="introScreen">
   <div class="intro-card">
     <div class="intro-tag">用户研究 · 文本生成图像</div>
     <h1>图像偏好评测</h1>
-    <p>本问卷将依次展示 <strong>50 组图片</strong>，每组的两张图由两个不同的模型根据 <strong>同一段文字描述</strong> 生成。请针对每一组从下面三个独立维度做出选择。</p>
-    <div class="criteria-list">
-      <div class="crit-row"><div class="crit-dot" style="background:#15803d;"></div>
-        <div class="crit-text"><strong>视觉吸引力</strong><span>哪张图在视觉上更美观、更耐看（不考虑是否符合描述）？</span></div></div>
-      <div class="crit-row"><div class="crit-dot" style="background:#1d4ed8;"></div>
-        <div class="crit-text"><strong>描述匹配度</strong><span>哪张图更准确地呈现了文字描述里的内容？</span></div></div>
-      <div class="crit-row"><div class="crit-dot" style="background:#6d28d9;"></div>
-        <div class="crit-text"><strong>综合偏好</strong><span>综合所有方面，你整体上更喜欢哪张？</span></div></div>
-    </div>
+    <p>本问卷将展示 <strong>50 组图片</strong>，每组的两张图由两个不同的模型根据同一段文字描述生成。</p>
+    <div class="intro-tip">对每一组，<strong>直接点击你更喜欢的那张图</strong>即可，系统会自动跳到下一题。</div>
     <button class="start-btn" id="startBtn" onclick="startSurvey()">
       <span id="startBtnLabel">开始评测</span>
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -176,20 +149,16 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <div class="q-prompt-text" id="qPromptText"></div>
       </div>
       <div class="q-images">
-        <div class="q-img-col"><div class="q-img-wrap"><img id="imgA" src="" alt="图片 A" /><div class="img-label">图片 A</div></div></div>
-        <div class="q-img-col"><div class="q-img-wrap"><img id="imgB" src="" alt="图片 B" /><div class="img-label">图片 B</div></div></div>
+        <div class="q-img-col" id="colA" onclick="vote('a')">
+          <div class="q-img-wrap"><img id="imgA" src="" alt="图片 A" /><div class="img-label">图片 A</div></div>
+          <div class="img-pick"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        </div>
+        <div class="q-img-col" id="colB" onclick="vote('b')">
+          <div class="q-img-wrap"><img id="imgB" src="" alt="图片 B" /><div class="img-label">图片 B</div></div>
+          <div class="img-pick"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        </div>
       </div>
-      <div class="q-voting">
-        <div class="vote-row"><div class="vote-dim"><div class="dim-dot" style="background:#15803d;"></div>视觉吸引力</div>
-          <div class="vote-choices"><button class="vchoice" id="v-appeal-a" onclick="vote('appeal','a')"><span class="ck">✓</span> 图片 A</button><button class="vchoice" id="v-appeal-b" onclick="vote('appeal','b')"><span class="ck">✓</span> 图片 B</button></div>
-          <button class="vtie" id="v-appeal-tie" onclick="vote('appeal','tie')">差不多</button></div>
-        <div class="vote-row"><div class="vote-dim"><div class="dim-dot" style="background:#1d4ed8;"></div>描述匹配度</div>
-          <div class="vote-choices"><button class="vchoice" id="v-align-a" onclick="vote('align','a')"><span class="ck">✓</span> 图片 A</button><button class="vchoice" id="v-align-b" onclick="vote('align','b')"><span class="ck">✓</span> 图片 B</button></div>
-          <button class="vtie" id="v-align-tie" onclick="vote('align','tie')">差不多</button></div>
-        <div class="vote-row"><div class="vote-dim"><div class="dim-dot" style="background:#6d28d9;"></div>综合偏好</div>
-          <div class="vote-choices"><button class="vchoice" id="v-overall-a" onclick="vote('overall','a')"><span class="ck">✓</span> 图片 A</button><button class="vchoice" id="v-overall-b" onclick="vote('overall','b')"><span class="ck">✓</span> 图片 B</button></div>
-          <button class="vtie" id="v-overall-tie" onclick="vote('overall','tie')">差不多</button></div>
-      </div>
+      <div class="q-hint">点击你更喜欢的那张图。</div>
     </div>
     <div class="q-nav">
       <button class="nav-btn" id="prevBtn" onclick="goTo(cur-1)" disabled>
@@ -208,11 +177,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <div class="result-header">
       <div class="result-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
       <h2 class="result-title">评测完成</h2>
-      <p class="result-sub">感谢参与！下方是你的回答汇总。</p>
+      <p class="result-sub">感谢参与！下方是你的选择汇总。</p>
     </div>
-    <div class="stats-row" id="statsRow"></div>
+    <div class="result-summary" id="summaryRow"></div>
     <div class="result-table">
-      <div class="rt-head"><div>#</div><div>描述</div><div>吸引力</div><div>匹配度</div><div>综合</div></div>
+      <div class="rt-head"><div>#</div><div>描述</div><div>更喜欢</div></div>
       <div class="rt-scroll" id="rtBody"></div>
     </div>
     <div class="result-actions">
@@ -224,15 +193,13 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 </div>
 
 <script>
-const BASE_URL = 'https://cdn.jsdelivr.net/gh/sophialanlan/map-pgmap-humaneva@050e6e0d61383aa061a8af730c79e75dad4600ac/';
-const STR = {"preloading": "正在加载图片…", "start_btn": "开始评测", "q_badge": "第 {i} 题 / {n}", "q_short": "第", "prompt_label": "描述", "dim_appeal": "视觉吸引力", "dim_align": "描述匹配度", "dim_overall": "综合偏好", "choice_a": "图片 A", "choice_b": "图片 B", "choice_tie": "差不多", "nav_next": "下一题", "nav_submit": "提交", "copied": "已复制！"};
-const questions = [{"prompt": "一辆蓝色皮卡，车斗里有一只犀牛", "imgA": "human_eval_pairs/q01_A.webp", "imgB": "human_eval_pairs/q01_B.webp"}, {"prompt": "一艘大型白色游艇", "imgA": "human_eval_pairs/q02_A.webp", "imgB": "human_eval_pairs/q02_B.webp"}, {"prompt": "满月上的一头大象的剪影", "imgA": "human_eval_pairs/q03_A.webp", "imgB": "human_eval_pairs/q03_B.webp"}, {"prompt": "一朵带有大片黄色花瓣的花", "imgA": "human_eval_pairs/q04_A.webp", "imgB": "human_eval_pairs/q04_B.webp"}, {"prompt": "一只穿蓝色慢跑服的白兔痛得弯下腰，而一只穿红色背心的乌龟自信地冲过终点线", "imgA": "human_eval_pairs/q05_A.webp", "imgB": "human_eval_pairs/q05_B.webp"}, {"prompt": "我的世界(Minecraft)风格的蒙娜丽莎", "imgA": "human_eval_pairs/q06_A.webp", "imgB": "human_eval_pairs/q06_B.webp"}, {"prompt": "一只鸟和它在喷泉中的倒影", "imgA": "human_eval_pairs/q07_A.webp", "imgB": "human_eval_pairs/q07_B.webp"}, {"prompt": "从上方俯瞰的一座钟楼", "imgA": "human_eval_pairs/q08_A.webp", "imgB": "human_eval_pairs/q08_B.webp"}, {"prompt": "几片睡莲叶，上面没有青蛙", "imgA": "human_eval_pairs/q09_A.webp", "imgB": "human_eval_pairs/q09_B.webp"}, {"prompt": "下龙湾", "imgA": "human_eval_pairs/q10_A.webp", "imgB": "human_eval_pairs/q10_B.webp"}, {"prompt": "一副耳机放在一把吉他上", "imgA": "human_eval_pairs/q11_A.webp", "imgB": "human_eval_pairs/q11_B.webp"}, {"prompt": "一幅山上房屋的抽象画", "imgA": "human_eval_pairs/q12_A.webp", "imgB": "human_eval_pairs/q12_B.webp"}, {"prompt": "一位板球手站在三柱门(wicket)旁边", "imgA": "human_eval_pairs/q13_A.webp", "imgB": "human_eval_pairs/q13_B.webp"}, {"prompt": "一只火鸡在厨房里走动", "imgA": "human_eval_pairs/q14_A.webp", "imgB": "human_eval_pairs/q14_B.webp"}, {"prompt": "一只猫坐在一个画有大象图案的盒子上", "imgA": "human_eval_pairs/q15_A.webp", "imgB": "human_eval_pairs/q15_B.webp"}, {"prompt": "一件印着 \"Carpe Diem\" 字样的 T 恤", "imgA": "human_eval_pairs/q16_A.webp", "imgB": "human_eval_pairs/q16_B.webp"}, {"prompt": "一座太空电梯", "imgA": "human_eval_pairs/q17_A.webp", "imgB": "human_eval_pairs/q17_B.webp"}, {"prompt": "一幅男孩与老虎玩耍的卡通画", "imgA": "human_eval_pairs/q18_A.webp", "imgB": "human_eval_pairs/q18_B.webp"}, {"prompt": "一双黑色高帮运动鞋", "imgA": "human_eval_pairs/q19_A.webp", "imgB": "human_eval_pairs/q19_B.webp"}, {"prompt": "一条有几辆汽车的街道", "imgA": "human_eval_pairs/q20_A.webp", "imgB": "human_eval_pairs/q20_B.webp"}, {"prompt": "木星之眼", "imgA": "human_eval_pairs/q21_A.webp", "imgB": "human_eval_pairs/q21_B.webp"}, {"prompt": "一头驴和一只章鱼在拔河。驴用嘴叼着绳子。一只猫正从绳子上跳过。", "imgA": "human_eval_pairs/q22_A.webp", "imgB": "human_eval_pairs/q22_B.webp"}, {"prompt": "一位法官在向被告宣读判决", "imgA": "human_eval_pairs/q23_A.webp", "imgB": "human_eval_pairs/q23_B.webp"}, {"prompt": "一只长着黑耳朵和黑色斑纹的白猫", "imgA": "human_eval_pairs/q24_A.webp", "imgB": "human_eval_pairs/q24_B.webp"}, {"prompt": "一双印着可爱猫咪的成对袜子", "imgA": "human_eval_pairs/q25_A.webp", "imgB": "human_eval_pairs/q25_B.webp"}, {"prompt": "一座雕像", "imgA": "human_eval_pairs/q26_A.webp", "imgB": "human_eval_pairs/q26_B.webp"}, {"prompt": "一个女孩骑着一只鸵鸟", "imgA": "human_eval_pairs/q27_A.webp", "imgB": "human_eval_pairs/q27_B.webp"}, {"prompt": "一本儿童读物封面，画着一只白狗在驾驶一辆红色皮卡", "imgA": "human_eval_pairs/q28_A.webp", "imgB": "human_eval_pairs/q28_B.webp"}, {"prompt": "一位祖母在给她的孙子和孙女读书", "imgA": "human_eval_pairs/q29_A.webp", "imgB": "human_eval_pairs/q29_B.webp"}, {"prompt": "皇家城堡里的一面墙。墙上有两幅画。左边是一幅精细的浣熊国王油画，右边是一幅精细的浣熊王后油画。一只可爱的狗在看这两幅画，举着一块牌子写着 'plz conserve'", "imgA": "human_eval_pairs/q30_A.webp", "imgB": "human_eval_pairs/q30_B.webp"}, {"prompt": "一张由水构成的蜻蜓的照片", "imgA": "human_eval_pairs/q31_A.webp", "imgB": "human_eval_pairs/q31_B.webp"}, {"prompt": "一个由豪猪构成的立方体", "imgA": "human_eval_pairs/q32_A.webp", "imgB": "human_eval_pairs/q32_B.webp"}, {"prompt": "一杯橙汁，放在一盘涂了黄油的吐司的右边", "imgA": "human_eval_pairs/q33_A.webp", "imgB": "human_eval_pairs/q33_B.webp"}, {"prompt": "几匹马在月球表面拉着马车，背景是自由女神像和大金字塔，天空中可以看到地球", "imgA": "human_eval_pairs/q34_A.webp", "imgB": "human_eval_pairs/q34_B.webp"}, {"prompt": "一个皮肤晒成棕色、穿着蓝色牛仔裤和黄色衬衫的女人", "imgA": "human_eval_pairs/q35_A.webp", "imgB": "human_eval_pairs/q35_B.webp"}, {"prompt": "一只长着蓝色条纹的斑马", "imgA": "human_eval_pairs/q36_A.webp", "imgB": "human_eval_pairs/q36_B.webp"}, {"prompt": "一支球队在海滩上打棒球", "imgA": "human_eval_pairs/q37_A.webp", "imgB": "human_eval_pairs/q37_B.webp"}, {"prompt": "一头驼鹿在山间小溪旁", "imgA": "human_eval_pairs/q38_A.webp", "imgB": "human_eval_pairs/q38_B.webp"}, {"prompt": "一只戴着摩托车头盔、披着披风的泰迪熊站在阿威湖(Loch Awe)前，身后是基尔丘恩城堡(Kilchurn Castle)", "imgA": "human_eval_pairs/q39_A.webp", "imgB": "human_eval_pairs/q39_B.webp"}, {"prompt": "一架竹梯", "imgA": "human_eval_pairs/q40_A.webp", "imgB": "human_eval_pairs/q40_B.webp"}, {"prompt": "四个人坐在一辆敞篷车里", "imgA": "human_eval_pairs/q41_A.webp", "imgB": "human_eval_pairs/q41_B.webp"}, {"prompt": "一个闪亮的机器人穿着赛车服、戴着黑色面罩，自豪地站在一辆 F1 赛车前。背景是夕阳下的城市天际线。漫画风格插画。", "imgA": "human_eval_pairs/q42_A.webp", "imgB": "human_eval_pairs/q42_B.webp"}, {"prompt": "一位政客在向大批人群演讲", "imgA": "human_eval_pairs/q43_A.webp", "imgB": "human_eval_pairs/q43_B.webp"}, {"prompt": "一个红色球体在一个黄色盒子上面", "imgA": "human_eval_pairs/q44_A.webp", "imgB": "human_eval_pairs/q44_B.webp"}, {"prompt": "一幅老忠实间歇泉(Old Faithful)的印象派绘画", "imgA": "human_eval_pairs/q45_A.webp", "imgB": "human_eval_pairs/q45_B.webp"}, {"prompt": "两个人面对面", "imgA": "human_eval_pairs/q46_A.webp", "imgB": "human_eval_pairs/q46_B.webp"}, {"prompt": "一台笔记本电脑屏幕上显示着一堆照片", "imgA": "human_eval_pairs/q47_A.webp", "imgB": "human_eval_pairs/q47_B.webp"}, {"prompt": "两把直立的小提琴，琴弓放在它们前面的地面上", "imgA": "human_eval_pairs/q48_A.webp", "imgB": "human_eval_pairs/q48_B.webp"}, {"prompt": "一扇画着熊猫吃竹子的彩绘玻璃窗", "imgA": "human_eval_pairs/q49_A.webp", "imgB": "human_eval_pairs/q49_B.webp"}, {"prompt": "一张木星卫星群的图像", "imgA": "human_eval_pairs/q50_A.webp", "imgB": "human_eval_pairs/q50_B.webp"}];
+const BASE_URL = 'https://cdn.jsdelivr.net/gh/sophialanlan/map-pgmap-humaneva@main/';
+const STR = {"preloading": "正在加载图片…", "start_btn": "开始评测", "q_badge": "第 {i} 题 / {n}", "q_short": "第", "prompt_label": "描述", "choice_a": "图片 A", "choice_b": "图片 B", "nav_next": "下一题", "nav_submit": "提交", "copied": "已复制！"};
+const questions = [{"prompt": "一辆蓝色皮卡，车斗里有一只犀牛", "imgA": "human_eval_pairs/q01_A.webp", "imgB": "human_eval_pairs/q01_B.webp"}, {"prompt": "一艘大型白色游艇", "imgA": "human_eval_pairs/q02_A.webp", "imgB": "human_eval_pairs/q02_B.webp"}, {"prompt": "满月上的一头大象的剪影", "imgA": "human_eval_pairs/q03_A.webp", "imgB": "human_eval_pairs/q03_B.webp"}, {"prompt": "一朵带有大片黄色花瓣的花", "imgA": "human_eval_pairs/q04_A.webp", "imgB": "human_eval_pairs/q04_B.webp"}, {"prompt": "一只穿蓝色慢跑服的白兔痛得弯下腰，而一只穿红色背心的乌龟自信地冲过终点线", "imgA": "human_eval_pairs/q05_A.webp", "imgB": "human_eval_pairs/q05_B.webp"}, {"prompt": "我的世界(Minecraft)风格的蒙娜丽莎", "imgA": "human_eval_pairs/q06_A.webp", "imgB": "human_eval_pairs/q06_B.webp"}, {"prompt": "一只鸟和它在喷泉中的倒影", "imgA": "human_eval_pairs/q07_A.webp", "imgB": "human_eval_pairs/q07_B.webp"}, {"prompt": "从上方俯瞰的一座钟楼", "imgA": "human_eval_pairs/q08_A.webp", "imgB": "human_eval_pairs/q08_B.webp"}, {"prompt": "几片睡莲叶，上面没有青蛙", "imgA": "human_eval_pairs/q09_A.webp", "imgB": "human_eval_pairs/q09_B.webp"}, {"prompt": "下龙湾", "imgA": "human_eval_pairs/q10_A.webp", "imgB": "human_eval_pairs/q10_B.webp"}, {"prompt": "一艘外形像悉尼歌剧院的宇宙飞船", "imgA": "human_eval_pairs/q11_A.webp", "imgB": "human_eval_pairs/q11_B.webp"}, {"prompt": "一幅山上房屋的抽象画", "imgA": "human_eval_pairs/q12_A.webp", "imgB": "human_eval_pairs/q12_B.webp"}, {"prompt": "那艘顺着河漂下去的木筏沉了", "imgA": "human_eval_pairs/q13_A.webp", "imgB": "human_eval_pairs/q13_B.webp"}, {"prompt": "一只火鸡在厨房里走动", "imgA": "human_eval_pairs/q14_A.webp", "imgB": "human_eval_pairs/q14_B.webp"}, {"prompt": "桌子上的一把锤子", "imgA": "human_eval_pairs/q15_A.webp", "imgB": "human_eval_pairs/q15_B.webp"}, {"prompt": "一件印着 \"Carpe Diem\" 字样的 T 恤", "imgA": "human_eval_pairs/q16_A.webp", "imgB": "human_eval_pairs/q16_B.webp"}, {"prompt": "一座太空电梯", "imgA": "human_eval_pairs/q17_A.webp", "imgB": "human_eval_pairs/q17_B.webp"}, {"prompt": "一幅男孩与老虎玩耍的卡通画", "imgA": "human_eval_pairs/q18_A.webp", "imgB": "human_eval_pairs/q18_B.webp"}, {"prompt": "一座大型城市喷泉里流的是牛奶而不是水，几只猫正趴在喷泉边", "imgA": "human_eval_pairs/q19_A.webp", "imgB": "human_eval_pairs/q19_B.webp"}, {"prompt": "一条有几辆汽车的街道", "imgA": "human_eval_pairs/q20_A.webp", "imgB": "human_eval_pairs/q20_B.webp"}, {"prompt": "木星之眼", "imgA": "human_eval_pairs/q21_A.webp", "imgB": "human_eval_pairs/q21_B.webp"}, {"prompt": "两名跑步者一起冲过终点线", "imgA": "human_eval_pairs/q22_A.webp", "imgB": "human_eval_pairs/q22_B.webp"}, {"prompt": "一幅男人站在树下的素描", "imgA": "human_eval_pairs/q23_A.webp", "imgB": "human_eval_pairs/q23_B.webp"}, {"prompt": "一只长着黑耳朵和黑色斑纹的白猫", "imgA": "human_eval_pairs/q24_A.webp", "imgB": "human_eval_pairs/q24_B.webp"}, {"prompt": "一个孩子在蹦床上跳起的瞬间", "imgA": "human_eval_pairs/q25_A.webp", "imgB": "human_eval_pairs/q25_B.webp"}, {"prompt": "一个小女孩在弹钢琴", "imgA": "human_eval_pairs/q26_A.webp", "imgB": "human_eval_pairs/q26_B.webp"}, {"prompt": "一个女孩骑着一只鸵鸟", "imgA": "human_eval_pairs/q27_A.webp", "imgB": "human_eval_pairs/q27_B.webp"}, {"prompt": "一本儿童读物封面，画着一只白狗在驾驶一辆红色皮卡", "imgA": "human_eval_pairs/q28_A.webp", "imgB": "human_eval_pairs/q28_B.webp"}, {"prompt": "一个女人用大锤砸一座鹅形冰雕", "imgA": "human_eval_pairs/q29_A.webp", "imgB": "human_eval_pairs/q29_B.webp"}, {"prompt": "一辆摩托车停在一只犀牛前面", "imgA": "human_eval_pairs/q30_A.webp", "imgB": "human_eval_pairs/q30_B.webp"}, {"prompt": "一张由水构成的蜻蜓的照片", "imgA": "human_eval_pairs/q31_A.webp", "imgB": "human_eval_pairs/q31_B.webp"}, {"prompt": "一只浣熊穿着正装、戴着高礼帽、拿着手杖，还提着一个垃圾袋。抽象立体主义风格油画", "imgA": "human_eval_pairs/q32_A.webp", "imgB": "human_eval_pairs/q32_B.webp"}, {"prompt": "一杯橙汁，放在一盘涂了黄油的吐司的右边", "imgA": "human_eval_pairs/q33_A.webp", "imgB": "human_eval_pairs/q33_B.webp"}, {"prompt": "几匹马在月球表面拉着马车，背景是自由女神像和大金字塔，天空中可以看到地球", "imgA": "human_eval_pairs/q34_A.webp", "imgB": "human_eval_pairs/q34_B.webp"}, {"prompt": "一个皮肤晒成棕色、穿着蓝色牛仔裤和黄色衬衫的女人", "imgA": "human_eval_pairs/q35_A.webp", "imgB": "human_eval_pairs/q35_B.webp"}, {"prompt": "一列绿色的火车正驶过铁轨", "imgA": "human_eval_pairs/q36_A.webp", "imgB": "human_eval_pairs/q36_B.webp"}, {"prompt": "一支球队在海滩上打棒球", "imgA": "human_eval_pairs/q37_A.webp", "imgB": "human_eval_pairs/q37_B.webp"}, {"prompt": "一头驼鹿在山间小溪旁", "imgA": "human_eval_pairs/q38_A.webp", "imgB": "human_eval_pairs/q38_B.webp"}, {"prompt": "一只戴着摩托车头盔、披着披风的泰迪熊站在阿威湖(Loch Awe)前，身后是基尔丘恩城堡(Kilchurn Castle)", "imgA": "human_eval_pairs/q39_A.webp", "imgB": "human_eval_pairs/q39_B.webp"}, {"prompt": "一只画着闪电图案的黑鞋", "imgA": "human_eval_pairs/q40_A.webp", "imgB": "human_eval_pairs/q40_B.webp"}, {"prompt": "一张古希腊雅典风格花瓶的照片，瓶身上画着以埃及象形文字风格描绘的熊猫打网球的图案", "imgA": "human_eval_pairs/q41_A.webp", "imgB": "human_eval_pairs/q41_B.webp"}, {"prompt": "一个闪亮的机器人穿着赛车服、戴着黑色面罩，自豪地站在一辆 F1 赛车前。背景是夕阳下的城市天际线。漫画风格插画。", "imgA": "human_eval_pairs/q42_A.webp", "imgB": "human_eval_pairs/q42_B.webp"}, {"prompt": "一位政客在向大批人群演讲", "imgA": "human_eval_pairs/q43_A.webp", "imgB": "human_eval_pairs/q43_B.webp"}, {"prompt": "一个红色球体在一个黄色盒子上面", "imgA": "human_eval_pairs/q44_A.webp", "imgB": "human_eval_pairs/q44_B.webp"}, {"prompt": "一幅老忠实间歇泉(Old Faithful)的印象派绘画", "imgA": "human_eval_pairs/q45_A.webp", "imgB": "human_eval_pairs/q45_B.webp"}, {"prompt": "两个人面对面", "imgA": "human_eval_pairs/q46_A.webp", "imgB": "human_eval_pairs/q46_B.webp"}, {"prompt": "一台笔记本电脑屏幕上显示着一堆照片", "imgA": "human_eval_pairs/q47_A.webp", "imgB": "human_eval_pairs/q47_B.webp"}, {"prompt": "一辆红色巴士正行驶在路上", "imgA": "human_eval_pairs/q48_A.webp", "imgB": "human_eval_pairs/q48_B.webp"}, {"prompt": "一扇画着熊猫吃竹子的彩绘玻璃窗", "imgA": "human_eval_pairs/q49_A.webp", "imgB": "human_eval_pairs/q49_B.webp"}, {"prompt": "一张木星卫星群的图像", "imgA": "human_eval_pairs/q50_A.webp", "imgB": "human_eval_pairs/q50_B.webp"}];
 
 const N = questions.length;
-const DIMS = ['appeal', 'align', 'overall'];
-const answers = questions.map(() => ({appeal: null, align: null, overall: null}));
+const answers = questions.map(() => null);    // 'a' | 'b' | null
 let cur = 0;
-let preloaded = 0;
 
 function preloadAll(onProgress, onDone) {
   let done = 0;
@@ -297,14 +264,10 @@ function renderQ(idx, dir) {
     document.getElementById('qPromptText').innerHTML = STR.prompt_label + ': <strong>"' + q.prompt + '"</strong>';
     document.getElementById('imgA').src = BASE_URL + q.imgA;
     document.getElementById('imgB').src = BASE_URL + q.imgB;
-    DIMS.forEach(dim => {
-      ['a', 'b', 'tie'].forEach(c => {
-        const btn = document.getElementById('v-' + dim + '-' + c);
-        if (!btn) return;
-        btn.classList.remove('on-' + dim);
-        if (answers[idx][dim] === c) btn.classList.add('on-' + dim);
-      });
-    });
+    const colA = document.getElementById('colA'), colB = document.getElementById('colB');
+    colA.classList.toggle('picked', answers[idx] === 'a');
+    colB.classList.toggle('picked', answers[idx] === 'b');
+
     card.style.transition = 'none';
     card.style.opacity = '0';
     card.style.transform = dir === 'next' ? 'translateX(28px)' : (dir === 'prev' ? 'translateX(-28px)' : 'translateX(0)');
@@ -318,18 +281,16 @@ function renderQ(idx, dir) {
   }, dir === 'none' ? 0 : 80);
 }
 
-function vote(dim, choice) {
-  answers[cur][dim] = choice;
-  ['a', 'b', 'tie'].forEach(c => {
-    const btn = document.getElementById('v-' + dim + '-' + c);
-    btn.classList.remove('on-' + dim);
-    if (c === choice) btn.classList.add('on-' + dim);
-  });
+function vote(choice) {
+  answers[cur] = choice;
+  document.getElementById('colA').classList.toggle('picked', choice === 'a');
+  document.getElementById('colB').classList.toggle('picked', choice === 'b');
   updateProgress();
   updateDots();
-  const a = answers[cur];
-  if (DIMS.every(d => a[d] !== null) && cur < N - 1) {
-    setTimeout(() => goTo(cur + 1, 'next'), 340);
+  if (cur < N - 1) {
+    setTimeout(() => goTo(cur + 1, 'next'), 280);
+  } else {
+    updateNav();
   }
 }
 
@@ -347,7 +308,7 @@ function handleNext() {
 function updateNav() {
   document.getElementById('prevBtn').disabled = cur === 0;
   const nextBtn = document.getElementById('nextBtn');
-  const allDone = answers.every(a => DIMS.every(d => a[d] !== null));
+  const allDone = answers.every(a => a !== null);
   const arrow = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   if (cur === N - 1) {
     nextBtn.innerHTML = STR.nav_submit + ' ' + arrow;
@@ -365,12 +326,12 @@ function updateDots() {
     if (!d) return;
     d.className = 'nav-dot';
     if (i === cur) d.classList.add('current');
-    else if (DIMS.every(dim => answers[i][dim] !== null)) d.classList.add('done');
+    else if (answers[i] !== null) d.classList.add('done');
   });
 }
 
 function updateProgress() {
-  const done = answers.filter(a => DIMS.every(d => a[d] !== null)).length;
+  const done = answers.filter(a => a !== null).length;
   document.getElementById('pBar').style.width = (done / N * 100) + '%';
   document.getElementById('pLabel').textContent = done + ' / ' + N;
   updateDots();
@@ -378,29 +339,25 @@ function updateProgress() {
 }
 
 function showResult() {
-  const counts = { appeal:{a:0,b:0,tie:0}, align:{a:0,b:0,tie:0}, overall:{a:0,b:0,tie:0} };
-  answers.forEach(a => DIMS.forEach(d => { if (a[d]) counts[d][a[d]]++; }));
-  const dimLabels = { appeal: STR.dim_appeal, align: STR.dim_align, overall: STR.dim_overall };
-  document.getElementById('statsRow').innerHTML = DIMS.map(d => {
-    const {a,b,tie} = counts[d];
-    const mx = Math.max(a,b,tie,1);
-    const hA = Math.round(a/mx*40), hB = Math.round(b/mx*40), hT = Math.round(tie/mx*40);
-    return '<div class="stat-box"><div class="stat-dim-label">' + dimLabels[d] + '</div>'
-      + '<div class="stat-bars"><div class="sbar a" style="height:' + Math.max(hA,4) + 'px"></div>'
-      + '<div class="sbar b" style="height:' + Math.max(hB,4) + 'px"></div>'
-      + '<div class="sbar t" style="height:' + Math.max(hT,4) + 'px"></div></div>'
-      + '<div class="stat-nums"><span class="sn-a">A:' + a + '</span><span class="sn-b">B:' + b + '</span><span class="sn-t">' + STR.choice_tie + ':' + tie + '</span></div></div>';
-  }).join('');
-  const chipCls = v => v==='a'?'ca':v==='b'?'cb':v==='tie'?'ct':'cn';
-  const chipTxt = v => v==='a'?STR.choice_a:v==='b'?STR.choice_b:v==='tie'?STR.choice_tie:'—';
+  let a = 0, b = 0, none = 0;
+  answers.forEach(v => { if (v === 'a') a++; else if (v === 'b') b++; else none++; });
+  const tot = a + b;
+  const pctA = tot ? Math.round(a / tot * 100) : 0;
+  const pctB = tot ? Math.round(b / tot * 100) : 0;
+  document.getElementById('summaryRow').innerHTML =
+    '<div class="sum-box"><div class="sum-side">' + STR.choice_a + '</div>'
+    + '<div class="sum-count">' + a + '</div><div class="sum-pct">' + pctA + '%</div></div>'
+    + '<div class="sum-box"><div class="sum-side">' + STR.choice_b + '</div>'
+    + '<div class="sum-count">' + b + '</div><div class="sum-pct">' + pctB + '%</div></div>';
+
+  const chipCls = v => v==='a'?'ca':v==='b'?'cb':'cn';
+  const chipTxt = v => v==='a'?STR.choice_a:v==='b'?STR.choice_b:'—';
   document.getElementById('rtBody').innerHTML = questions.map((q,i) => {
-    const a = answers[i];
-    const short = q.prompt.length > 48 ? q.prompt.slice(0,48)+'…' : q.prompt;
+    const v = answers[i];
+    const short = q.prompt.length > 56 ? q.prompt.slice(0,56)+'…' : q.prompt;
     return '<div class="rt-row" onclick="goToQ(' + i + ')">'
       + '<div class="rt-n">' + (i+1) + '</div><div class="rt-p">' + short + '</div>'
-      + '<div><span class="chip ' + chipCls(a.appeal) + '">' + chipTxt(a.appeal) + '</span></div>'
-      + '<div><span class="chip ' + chipCls(a.align) + '">' + chipTxt(a.align) + '</span></div>'
-      + '<div><span class="chip ' + chipCls(a.overall) + '">' + chipTxt(a.overall) + '</span></div></div>';
+      + '<div><span class="chip ' + chipCls(v) + '">' + chipTxt(v) + '</span></div></div>';
   }).join('');
   show('resultScreen');
 }
@@ -409,10 +366,9 @@ function goToQ(i) { show('questionScreen'); renderQ(i, 'none'); }
 function backToSurvey() { show('questionScreen'); renderQ(cur, 'none'); }
 
 function exportCSV() {
-  let csv = 'index,prompt,visual_appeal,prompt_alignment,overall_preference\n';
+  let csv = 'index,prompt,preferred\n';
   questions.forEach((q,i) => {
-    const a = answers[i];
-    csv += (i+1) + ',"' + q.prompt.replace(/"/g,'""') + '",' + (a.appeal||'') + ',' + (a.align||'') + ',' + (a.overall||'') + '\n';
+    csv += (i+1) + ',"' + q.prompt.replace(/"/g,'""') + '",' + (answers[i]||'') + '\n';
   });
   const url = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
   const l = document.createElement('a');
@@ -422,10 +378,7 @@ function exportCSV() {
 
 function copyJSON() {
   const data = questions.map((q,i) => ({
-    index: i+1, prompt: q.prompt,
-    visual_appeal: answers[i].appeal,
-    prompt_alignment: answers[i].align,
-    overall_preference: answers[i].overall
+    index: i+1, prompt: q.prompt, preferred: answers[i]
   }));
   navigator.clipboard.writeText(JSON.stringify(data,null,2)).then(() => {
     const btn = document.querySelector('.result-actions .btn-f:last-child');
