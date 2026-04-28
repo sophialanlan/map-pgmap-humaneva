@@ -47,8 +47,9 @@ h1 { font-family: 'DM Serif Display', serif; font-size: 32px; font-weight: 400; 
     <span style="margin-left:auto"><button class="refresh-btn" id="refreshBtn" onclick="refresh()">Refresh</button></span>
   </div>
   <div class="notes">
-    Auto-refreshes every 60 s. Win rate is the fraction of judgments where PG-MAP's image was preferred.
-    P-values are two-sided binomial tests against 50%; <b>p &lt; 0.05</b> means the lift is statistically significant.
+    Auto-refreshes every 60 s. Win rate = PG-MAP wins / (PG-MAP wins + baseline wins) — ties are excluded from the rate
+    but reported separately. P-values are two-sided binomial tests on decisive judgments only;
+    <b>p &lt; 0.05</b> with n &ge; 30 means the lift is statistically significant.
   </div>
   <div id="err" class="err" style="display:none"></div>
   <div class="cards" id="cards"></div>
@@ -110,18 +111,22 @@ function render(data) {
   cards.innerHTML = '';
   Object.keys(BASELINE_INFO).forEach(bl => {
     const info = BASELINE_INFO[bl];
-    const s = (data.stats && data.stats[bl]) || {ours: 0, baseline: 0, n: 0};
-    const wr = s.n ? s.ours / s.n : 0;
-    const p = binomP(s.ours, s.n);
-    const sig = (s.n >= 30) && (p < 0.05);
+    const s = (data.stats && data.stats[bl]) || {ours: 0, baseline: 0, tie: 0, n: 0};
+    const tie = s.tie || 0;
+    const decisive = s.ours + s.baseline;
+    const total = decisive + tie;
+    const wr = decisive ? s.ours / decisive : 0;
+    const p = binomP(s.ours, decisive);
+    const sig = (decisive >= 30) && (p < 0.05);
     cards.innerHTML += `
       <div class="card">
         <div class="bl-name">${info.label}</div>
         <div class="bl-sub">${info.sub}</div>
         <div class="win ${sig ? 'sig' : 'ns'}">${(wr*100).toFixed(1)}%</div>
         <div class="bar"><div class="bar-mid"></div><div class="bar-fill" style="width:${wr*100}%"></div></div>
-        <div class="row2"><span>PG-MAP wins: ${s.ours}</span><span>n = ${s.n}</span></div>
-        <div class="pval">two-sided binomial <b>p = ${s.n ? p.toFixed(4) : 'n/a'}</b>${sig ? ' (significant)' : ''}</div>
+        <div class="row2"><span>PG-MAP: ${s.ours} · ${info.label.replace(/^vs\.?\s*/, '')}: ${s.baseline} · Tie: ${tie}</span></div>
+        <div class="row2" style="margin-top:6px"><span>decisive n = ${decisive} (excludes ${tie} ties)</span><span>total = ${total}</span></div>
+        <div class="pval">two-sided binomial <b>p = ${decisive ? p.toFixed(4) : 'n/a'}</b>${sig ? ' (significant)' : ''}</div>
       </div>`;
   });
 }
