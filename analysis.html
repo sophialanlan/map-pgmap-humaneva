@@ -41,7 +41,7 @@ h1 { font-family: 'DM Serif Display', serif; font-size: 32px; font-weight: 400; 
   <h1>Live Win-Rate Dashboard</h1>
   <p class="sub">PG-MAP vs. SDXL Baseline / Tuned-CFG / Universal Guidance — preference rate from human raters.</p>
   <div class="meta">
-    <span><b>Submissions:</b> <span id="nSubs">—</span></span>
+    <span><b>Submissions:</b> <span id="nSubs">—</span> <span id="subsBreakdown" style="color:#a1a1aa"></span></span>
     <span><b>Total votes:</b> <span id="nVotes">—</span></span>
     <span><b>Last update:</b> <span id="lastUpdate">—</span></span>
     <span style="margin-left:auto"><button class="refresh-btn" id="refreshBtn" onclick="refresh()">Refresh</button></span>
@@ -105,6 +105,9 @@ async function refresh() {
 
 function render(data) {
   document.getElementById('nSubs').textContent = data.n_submissions ?? 0;
+  const auto = data.n_auto_submitted ?? 0, pasted = data.n_pasted ?? 0;
+  document.getElementById('subsBreakdown').textContent =
+    (auto || pasted) ? '(auto: ' + auto + ', pasted: ' + pasted + ')' : '';
   document.getElementById('nVotes').textContent = data.n_responses ?? 0;
   document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
   const cards = document.getElementById('cards');
